@@ -1,5 +1,5 @@
 ﻿using AA.Meta;
-using AA.Resolvers;
+//using AA.Resolvers;
 using MessagePack;
 using MessagePack.Resolvers;
 using UnityEngine;
@@ -24,7 +24,7 @@ namespace AA
             StaticCompositeResolver.Instance.Register(new[]
             {
                 MasterMemoryResolver.Instance, // set MasterMemory generated resolver
-                GeneratedResolver.Instance,    // set MessagePack generated resolver
+                //GeneratedResolver.Instance,    // set MessagePack generated resolver
                 StandardResolver.Instance      // set default MessagePack resolver
             });
 
