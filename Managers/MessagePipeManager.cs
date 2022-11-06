@@ -1,5 +1,4 @@
 using MessagePipe;
-using UnityEngine;
 
 namespace AA
 {
@@ -32,12 +31,12 @@ namespace AA
 
             var d = DisposableBag.CreateBuilder();
 
-            s.Subscribe(x => Debug.Log($"First: {x}")).AddTo(d);
-            s.Subscribe(x => Debug.Log($"Second: {x}")).AddTo(d);
+            //s.Subscribe(x => Debug.Log($"First: {x}")).AddTo(d);
+            //s.Subscribe(x => Debug.Log($"Second: {x}")).AddTo(d);
 
-            p.Publish(10);
-            p.Publish(20);
-            p.Publish(30);
+            //p.Publish(10);
+            //p.Publish(20);
+            //p.Publish(30);
 
             var disposable = d.Build();
             disposable.Dispose();

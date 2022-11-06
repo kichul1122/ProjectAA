@@ -45,5 +45,10 @@ namespace AA
             var binToJson = MessagePackSerializer.ConvertToJson(bytes);
             Console.WriteLine(binToJson);
         }
+
+        public void LoadStartUp()
+        {
+            StartUp.Load();
+        }
     }
 }
