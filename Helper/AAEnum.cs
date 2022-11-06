@@ -1,7 +1,27 @@
-using System;
-
 namespace AA
 {
+    public enum EStartUpState
+    {
+        AppVersion,
+        DownloadApp,
+        MetaVersion,
+        LoadMeta,
+        Login,
+        CreateUserData,
+        LoadServerData,
+        GamePlay,
+    }
+
+    public enum ESceneName
+    {
+        Empty,
+
+        StartUp,
+        Lobby,
+        Field,
+        Dungeon,
+    }
+
     public enum ELabel
     {
         Character,

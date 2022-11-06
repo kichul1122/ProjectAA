@@ -5,22 +5,7 @@ using UnityEngine;
 
 namespace AA
 {
-	public enum EAdditiveSceneName
-	{
-		Manager, UI
-	}
 
-	public enum ESceneName
-	{
-		Empty,
-
-		Main,
-		Patch,
-		Login,
-		Lobby,
-		Field,
-		Dungeon,
-	}
 
 	public interface IScene
 	{
@@ -39,10 +24,10 @@ namespace AA
 
 		private const string TagName = "Scene";
 
-		public static async UniTask LoadAdditiveAsync(EAdditiveSceneName eAdditiveSceneName)
-		{
-			await UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(eAdditiveSceneName.ToString(), UnityEngine.SceneManagement.LoadSceneMode.Additive);
-		}
+		//public static async UniTask LoadAdditiveAsync(EAdditiveSceneName eAdditiveSceneName)
+		//{
+		//	await UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(eAdditiveSceneName.ToString(), UnityEngine.SceneManagement.LoadSceneMode.Additive);
+		//}
 
 		public void SetCurrentScene(IScene currentScene)
 		{
@@ -96,10 +81,10 @@ namespace AA
 			throw new Exception("Not Fount FindNextScene");
 		}
 
-		public void MoveGameObjectToScene(GameObject gameObject, EAdditiveSceneName eAdditiveSceneName)
-		{
-			MoveGameObjectToScene(gameObject, eAdditiveSceneName.ToString());
-		}
+		//public void MoveGameObjectToScene(GameObject gameObject, EAdditiveSceneName eAdditiveSceneName)
+		//{
+		//	MoveGameObjectToScene(gameObject, eAdditiveSceneName.ToString());
+		//}
 
 		public void MoveGameObjectToScene(GameObject gameObject, ESceneName eSceneName)
 		{

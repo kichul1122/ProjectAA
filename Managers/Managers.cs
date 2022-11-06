@@ -81,7 +81,7 @@ namespace AA
 
             await UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(ESceneName.Empty.ToString(), UnityEngine.SceneManagement.LoadSceneMode.Single);
 
-            await UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(ESceneName.Main.ToString(), UnityEngine.SceneManagement.LoadSceneMode.Single);
+            //await UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(ESceneName.Main.ToString(), UnityEngine.SceneManagement.LoadSceneMode.Single);
         }
     }
 }

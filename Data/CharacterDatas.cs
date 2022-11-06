@@ -3,6 +3,7 @@ using UniRx;
 
 namespace AA
 {
+    [System.Serializable]
     public class CharacterDatas : IDisposable
     {
         public ReactiveCollection<CharacterData> Datas { get; set; } = new ReactiveCollection<CharacterData>();

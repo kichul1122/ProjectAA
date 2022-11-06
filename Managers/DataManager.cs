@@ -4,16 +4,7 @@ using System;
 
 namespace AA
 {
-    public class Data
-    {
-        public CharacterDatas Character { get; set; } = new CharacterDatas();
-        //public ItemDatas Item { get; set; } = new ItemDatas();
 
-        public void Dispose()
-        {
-            Character?.Dispose();
-        }
-    }
 
     /// <summary>
     /// Global Model Manager
@@ -21,6 +12,8 @@ namespace AA
     public class DataManager : ManagerMonobehaviour
     {
         public long DefaultPlayerId = 1122;
+
+        public StartUpData StartUp => Data.StartUp;
 
         public CharacterDatas Character => Data.Character;
 

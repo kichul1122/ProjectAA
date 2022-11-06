@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace AA
@@ -12,7 +10,7 @@ namespace AA
 
         public void MovePlayerCurrentSceneToBridge(GameObject playerGO)
         {
-            Managers.Scene.MoveGameObjectToScene(playerGO, EAdditiveSceneName.Manager);
+            //Managers.Scene.MoveGameObjectToScene(playerGO, EAdditiveSceneName.Manager);
 
             _playerGO = playerGO;
         }
