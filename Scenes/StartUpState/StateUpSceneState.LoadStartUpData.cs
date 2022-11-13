@@ -10,7 +10,7 @@ namespace AA
 		{
 			await UniTask.Yield();
 
-			_stateMachine.ChangeState(EStartUpState.LoadPopup);
+			_stateMachine.ChangeState(EStartUpSceneState.LoadPopup);
 		});
 	}
 }

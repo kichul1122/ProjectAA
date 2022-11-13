@@ -6,7 +6,7 @@ namespace AA
 	[System.Serializable]
 	public class StartUpSceneData : IDisposable
 	{
-		public ReactiveProperty<EStartUpState> CurrentStartUpStateRP;
+		public ReactiveProperty<EStartUpSceneState> CurrentStartUpStateRP;
 
 		public int AppMajorVersion;
 		public int AppMinorVersion;
@@ -16,7 +16,7 @@ namespace AA
 
 		public StartUpSceneData()
 		{
-			CurrentStartUpStateRP = new ReactiveProperty<EStartUpState>(EStartUpState.LoadStartUpData);
+			CurrentStartUpStateRP = new ReactiveProperty<EStartUpSceneState>(EStartUpSceneState.LoadStartUpData);
 		}
 
 		public void Dispose()
@@ -29,7 +29,7 @@ namespace AA
 
 		}
 
-		public void ChangeState(EStartUpState eStartUpState)
+		public void ChangeState(EStartUpSceneState eStartUpState)
 		{
 			CurrentStartUpStateRP.Value = eStartUpState;
 		}

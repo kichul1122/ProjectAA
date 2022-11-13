@@ -1,6 +1,6 @@
 namespace AA
 {
-    public enum EStartUpState
+    public enum EStartUpSceneState
     {
         LoadStartUpData,
         LoadPopup,

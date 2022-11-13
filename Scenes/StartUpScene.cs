@@ -11,7 +11,7 @@ namespace AA
 	{
 		private StartUpSceneData _startUpModel;
 
-		private StateMachine<EStartUpState, StateEmptyDriver> _stateMachine;
+		private StateMachine<EStartUpSceneState, StateEmptyDriver> _stateMachine;
 
 		#region Interface
 		public ESceneName Name => ESceneName.StartUp;
@@ -37,9 +37,9 @@ namespace AA
 		{
 			_startUpModel = Managers.Data.StartUp;
 
-			_stateMachine = new StateMachine<EStartUpState, StateEmptyDriver>(this);
+			_stateMachine = new StateMachine<EStartUpSceneState, StateEmptyDriver>(this);
 
-			Observable.FromEvent<EStartUpState>(
+			Observable.FromEvent<EStartUpSceneState>(
 					h => _stateMachine.Changed += h, h => _stateMachine.Changed -= h)
 				.Subscribe(state => Debug.Log($"State: {state}")).AddTo(this);
 
@@ -53,35 +53,35 @@ namespace AA
 		{
 			await UniTask.Yield();
 
-			_startUpModel.ChangeState(EStartUpState.AppVersion);
+			_startUpModel.ChangeState(EStartUpSceneState.AppVersion);
 		});
 
 		IEnumerator AppVersion_Enter() => UniTask.ToCoroutine(async () =>
 		{
 			await UniTask.Yield();
 
-			_startUpModel.ChangeState(EStartUpState.DownloadApp);
+			_startUpModel.ChangeState(EStartUpSceneState.DownloadApp);
 		});
 
 		IEnumerator DownloadApp_Enter() => UniTask.ToCoroutine(async () =>
 		{
 			await UniTask.Yield();
 
-			_startUpModel.ChangeState(EStartUpState.MetaVersion);
+			_startUpModel.ChangeState(EStartUpSceneState.MetaVersion);
 		});
 
 		IEnumerator MetaVersion_Enter() => UniTask.ToCoroutine(async () =>
 		{
 			await UniTask.Yield();
 
-			_startUpModel.ChangeState(EStartUpState.LoadMeta);
+			_startUpModel.ChangeState(EStartUpSceneState.LoadMeta);
 		});
 
 		IEnumerator LoadMeta_Enter() => UniTask.ToCoroutine(async () =>
 		{
 			await UniTask.Yield();
 
-			_startUpModel.ChangeState(EStartUpState.Login);
+			_startUpModel.ChangeState(EStartUpSceneState.Login);
 		});
 
 		IEnumerator Login_Enter() => UniTask.ToCoroutine(async () =>
@@ -92,11 +92,11 @@ namespace AA
 
 			if (isFristLogin)
 			{
-				_startUpModel.ChangeState(EStartUpState.CreateUserData);
+				_startUpModel.ChangeState(EStartUpSceneState.CreateUserData);
 			}
 			else
 			{
-				_startUpModel.ChangeState(EStartUpState.LoadServerData);
+				_startUpModel.ChangeState(EStartUpSceneState.LoadServerData);
 			}
 		});
 
@@ -104,14 +104,14 @@ namespace AA
 		{
 			await UniTask.Yield();
 
-			_startUpModel.ChangeState(EStartUpState.LoadServerData);
+			_startUpModel.ChangeState(EStartUpSceneState.LoadServerData);
 		});
 
 		IEnumerator LoadServerData_Enter() => UniTask.ToCoroutine(async () =>
 		{
 			await UniTask.Yield();
 
-			_startUpModel.ChangeState(EStartUpState.GamePlay);
+			_startUpModel.ChangeState(EStartUpSceneState.GamePlay);
 		});
 
 		IEnumerator GamePlay_Enter() => UniTask.ToCoroutine(async () =>
