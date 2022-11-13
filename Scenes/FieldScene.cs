@@ -1,18 +1,14 @@
 using Cysharp.Threading.Tasks;
-using Sirenix.OdinInspector;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.EventSystems;
 
 namespace AA
 {
 	public class FieldScene : MonoBehaviour, IScene
 	{
+		private FieldSceneData _fieldSceneData;
+
 		public ESceneName Name => ESceneName.Field;
 
 		public async UniTask StartAsync()
@@ -31,6 +27,8 @@ namespace AA
 
 		private async UniTaskVoid SetUp()
 		{
+			_fieldSceneData = Managers.Data.FieldScene;
+
 			await CreateMapAsync();
 
 			await SpawnEnemiesAsync();
@@ -46,7 +44,7 @@ namespace AA
 
 		private async UniTask CreateMapAsync()
 		{
-			var mapPrefab = await Managers.Resource.LoadPrefabAsync("Assets/_Resources/Map/Map_01.prefab", this);
+			var mapPrefab = await Managers.Resource.LoadPrefabAsync(_fieldSceneData.MapPrefabPath, this);
 			Managers.Resource.Instantiate(mapPrefab);
 		}
 
@@ -54,7 +52,7 @@ namespace AA
 		{
 			CharacterData playerCharacterData = Managers.Data.Character.Find(Managers.Data.DefaultPlayerId);
 			Character.Factory playerFactory = new Character.Factory();
-			Character playerCharacter = await playerFactory.CreateAsync("Assets/_Resources/Character/Character_01.prefab", playerCharacterData, this);
+			Character playerCharacter = await playerFactory.CreateAsync(_fieldSceneData.PlayerPrefabPath, playerCharacterData, this);
 			Managers.Object.AddPlayer(playerCharacter);
 
 			return playerCharacter;
@@ -65,7 +63,7 @@ namespace AA
 			EnemyPoolSpawner enemyPoolSpawner = new GameObject().AddComponent<EnemyPoolSpawner>();
 			enemyPoolSpawner.gameObject.name = nameof(EnemyPoolSpawner);
 
-			var enemyPrefab = await Managers.Resource.LoadPrefabAsync("Assets/_Resources/Character/Character_02.prefab", this);
+			var enemyPrefab = await Managers.Resource.LoadPrefabAsync(_fieldSceneData.EnemyPrefabPath, this);
 			Character.Pool enemyPool = new Character.Pool(enemyPrefab);
 
 			var enemySpawnerSetting = new EnemyPoolSpawner.Setting() { spawnInterval = 1d };

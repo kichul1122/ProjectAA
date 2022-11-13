@@ -6,92 +6,12 @@ using UnityEngine;
 
 namespace AA
 {
-	public partial class StartUpScene : MonoBehaviour
-	{
-		IEnumerator LoadPopup_Enter() => UniTask.ToCoroutine(async () =>
-		{
-			await UniTask.Yield();
 
-			_stateMachine.ChangeState(EStartUpSceneState.AppVersion);
-		});
-
-		IEnumerator AppVersion_Enter() => UniTask.ToCoroutine(async () =>
-		{
-			await UniTask.Yield();
-
-			_stateMachine.ChangeState(EStartUpSceneState.DownloadApp);
-		});
-
-		IEnumerator DownloadApp_Enter() => UniTask.ToCoroutine(async () =>
-		{
-			await UniTask.Yield();
-
-			_stateMachine.ChangeState(EStartUpSceneState.MetaVersion);
-		});
-
-		IEnumerator MetaVersion_Enter() => UniTask.ToCoroutine(async () =>
-		{
-			await UniTask.Yield();
-
-			_stateMachine.ChangeState(EStartUpSceneState.LoadMeta);
-		});
-
-		IEnumerator LoadMeta_Enter() => UniTask.ToCoroutine(async () =>
-		{
-			await UniTask.Yield();
-
-			_stateMachine.ChangeState(EStartUpSceneState.Login);
-		});
-
-		IEnumerator Login_Enter() => UniTask.ToCoroutine(async () =>
-		{
-			await UniTask.Yield();
-
-			bool isFristLogin = true;
-
-			if (isFristLogin)
-			{
-				_stateMachine.ChangeState(EStartUpSceneState.CreateUserData);
-			}
-			else
-			{
-				_stateMachine.ChangeState(EStartUpSceneState.LoadServerData);
-			}
-		});
-
-		IEnumerator CreateUserData_Enter() => UniTask.ToCoroutine(async () =>
-		{
-			await UniTask.Yield();
-
-			_stateMachine.ChangeState(EStartUpSceneState.LoadServerData);
-		});
-
-		IEnumerator LoadServerData_Enter() => UniTask.ToCoroutine(async () =>
-		{
-			await UniTask.Yield();
-
-			_stateMachine.ChangeState(EStartUpSceneState.GamePlay);
-		});
-
-	}
 	public partial class StartUpScene : MonoBehaviour, IScene
 	{
-		public enum EStartUpSceneState
-		{
-			LoadStartUpData,
-			LoadPopup,
-			AppVersion,
-			DownloadApp,
-			MetaVersion,
-			LoadMeta,
-			Login,
-			CreateUserData,
-			LoadServerData,
-			GamePlay,
+		private StartUpSceneData _startUpModel;
 
-		}
-
-		private StateMachine<EStartUpSceneState, StateEmptyDriver> _stateMachine;
+		private StateMachine<EStartUpState, StateEmptyDriver> _stateMachine;
 
 		#region Interface
 		public ESceneName Name => ESceneName.StartUp;
@@ -115,17 +35,92 @@ namespace AA
 
 		private async UniTaskVoid SetUpAsync()
 		{
-			Managers.Scene.SetCurrentScene(this);
+			_startUpModel = Managers.Data.StartUp;
 
-			_stateMachine = new StateMachine<EStartUpSceneState, StateEmptyDriver>(this);
+			_stateMachine = new StateMachine<EStartUpState, StateEmptyDriver>(this);
 
-			Observable.FromEvent<EStartUpSceneState>(
+			Observable.FromEvent<EStartUpState>(
 					h => _stateMachine.Changed += h, h => _stateMachine.Changed -= h)
 				.Subscribe(state => Debug.Log($"State: {state}")).AddTo(this);
 
-			_stateMachine.ChangeState(EStartUpSceneState.LoadStartUpData);
+			_startUpModel.CurrentStartUpStateRP.Subscribe(currentState => _stateMachine.ChangeState(currentState)).AddTo(this);
 
 			await UniTask.Yield();
 		}
+
+		#region State
+		IEnumerator LoadPopup_Enter() => UniTask.ToCoroutine(async () =>
+		{
+			await UniTask.Yield();
+
+			_startUpModel.ChangeState(EStartUpState.AppVersion);
+		});
+
+		IEnumerator AppVersion_Enter() => UniTask.ToCoroutine(async () =>
+		{
+			await UniTask.Yield();
+
+			_startUpModel.ChangeState(EStartUpState.DownloadApp);
+		});
+
+		IEnumerator DownloadApp_Enter() => UniTask.ToCoroutine(async () =>
+		{
+			await UniTask.Yield();
+
+			_startUpModel.ChangeState(EStartUpState.MetaVersion);
+		});
+
+		IEnumerator MetaVersion_Enter() => UniTask.ToCoroutine(async () =>
+		{
+			await UniTask.Yield();
+
+			_startUpModel.ChangeState(EStartUpState.LoadMeta);
+		});
+
+		IEnumerator LoadMeta_Enter() => UniTask.ToCoroutine(async () =>
+		{
+			await UniTask.Yield();
+
+			_startUpModel.ChangeState(EStartUpState.Login);
+		});
+
+		IEnumerator Login_Enter() => UniTask.ToCoroutine(async () =>
+		{
+			await UniTask.Yield();
+
+			bool isFristLogin = true;
+
+			if (isFristLogin)
+			{
+				_startUpModel.ChangeState(EStartUpState.CreateUserData);
+			}
+			else
+			{
+				_startUpModel.ChangeState(EStartUpState.LoadServerData);
+			}
+		});
+
+		IEnumerator CreateUserData_Enter() => UniTask.ToCoroutine(async () =>
+		{
+			await UniTask.Yield();
+
+			_startUpModel.ChangeState(EStartUpState.LoadServerData);
+		});
+
+		IEnumerator LoadServerData_Enter() => UniTask.ToCoroutine(async () =>
+		{
+			await UniTask.Yield();
+
+			_startUpModel.ChangeState(EStartUpState.GamePlay);
+		});
+
+		IEnumerator GamePlay_Enter() => UniTask.ToCoroutine(async () =>
+		{
+			await UniTask.Yield();
+
+			Managers.Scene.ChangeAsync(ESceneName.Field).Forget();
+
+		});
+		#endregion
 	}
 }

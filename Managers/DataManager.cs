@@ -13,7 +13,9 @@ namespace AA
     {
         public long DefaultPlayerId = 1122;
 
-        public StartUpData StartUp => Data.StartUp;
+        public StartUpSceneData StartUp => Data.StartUpScene;
+
+        public FieldSceneData FieldScene => Data.FieldScene;
 
         public CharacterDatas Character => Data.Character;
 

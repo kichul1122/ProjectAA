@@ -1,5 +1,3 @@
-using System;
-using UniRx;
 using UnityEngine;
 
 namespace AA
@@ -17,13 +15,13 @@ namespace AA
             this.objectManager = objectManager;
 
             //Interval Spawn Enemy
-            Observable.Interval(TimeSpan.FromSeconds(setting.spawnInterval)).Subscribe(_ =>
-            {
-                Character newCharacter = pool.Spawn();
-                newCharacter.Construct().SetParent(transform);
-                objectManager.AddEnemy(newCharacter);
+            //Observable.Interval(TimeSpan.FromSeconds(setting.spawnInterval)).Subscribe(_ =>
+            //{
+            //    Character newCharacter = pool.Spawn();
+            //    newCharacter.Construct().SetParent(transform);
+            //    objectManager.AddEnemy(newCharacter);
 
-            }).AddTo(this);
+            //}).AddTo(this);
         }
 
         public class Setting

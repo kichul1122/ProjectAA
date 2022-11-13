@@ -1,6 +1,19 @@
 namespace AA
 {
+    public enum EStartUpState
+    {
+        LoadStartUpData,
+        LoadPopup,
+        AppVersion,
+        DownloadApp,
+        MetaVersion,
+        LoadMeta,
+        Login,
+        CreateUserData,
+        LoadServerData,
+        GamePlay,
 
+    }
 
     public enum ESceneName
     {
