@@ -43,6 +43,10 @@ namespace AA
         [ReadOnly]
         public static MessagePipeManager MessagePipe { get; set; }
 
+        [ShowInInspector]
+        [ReadOnly]
+        public static InputManager Input { get; set; }
+
         public static void SetManager<T>(T manager) where T : ManagerMonobehaviour
         {
             switch (manager)
@@ -56,6 +60,7 @@ namespace AA
                 case MetaManager meta: Meta = meta; break;
                 case NetworkManager network: Network = network; break;
                 case MessagePipeManager messagePipe: MessagePipe = messagePipe; break;
+                case InputManager input: Input = input; break;
 
                 default: throw new ArgumentException();
             }

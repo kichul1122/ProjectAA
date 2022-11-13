@@ -6,17 +6,17 @@ namespace AA
 {
 	public class CharacterFollow : MonoBehaviour
 	{
-		private ISubscriber<TargetTransformEvent> _subscriber;
+		private ISubscriber<TargetTransformMsg> _subscriber;
 		private IDisposable _disposable;
 
 		private Transform _cachedTransform;
 		private Transform _targetTransform;
 
-		public struct TargetTransformEvent
+		public struct TargetTransformMsg
 		{
 			public Transform Value;
 
-			public TargetTransformEvent(Transform value)
+			public TargetTransformMsg(Transform value)
 			{
 				Value = value;
 			}
@@ -24,7 +24,7 @@ namespace AA
 
 		private void Awake()
 		{
-			_subscriber = Managers.MessagePipe.GetSubscriber<TargetTransformEvent>();
+			_subscriber = Managers.MessagePipe.GetSubscriber<TargetTransformMsg>();
 
 			_cachedTransform = transform;
 

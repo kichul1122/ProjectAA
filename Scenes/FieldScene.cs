@@ -8,7 +8,7 @@ namespace AA
 	public class FieldScene : MonoBehaviour, IScene
 	{
 		private FieldSceneModel _fieldSceneModel;
-		private IPublisher<CharacterFollow.TargetTransformEvent> _characterFollwPublisher;
+		private IPublisher<CharacterFollow.TargetTransformMsg> _characterFollwPublisher;
 
 		public ESceneName Name => ESceneName.Field;
 
@@ -28,7 +28,7 @@ namespace AA
 		{
 			_fieldSceneModel = Managers.Model.FieldScene;
 
-			_characterFollwPublisher = Managers.MessagePipe.GetPublisher<CharacterFollow.TargetTransformEvent>();
+			_characterFollwPublisher = Managers.MessagePipe.GetPublisher<CharacterFollow.TargetTransformMsg>();
 
 			await CreateMapAsync();
 
@@ -56,7 +56,7 @@ namespace AA
 			Character playerCharacter = await Character.DefaultFactory.CreateAsync(_fieldSceneModel.PlayerPrefabPath, playerCharacterModel, this);
 			Managers.Object.AddPlayer(playerCharacter);
 
-			_characterFollwPublisher.Publish(new CharacterFollow.TargetTransformEvent(playerCharacter.CachedTransform));
+			_characterFollwPublisher.Publish(new CharacterFollow.TargetTransformMsg(playerCharacter.CachedTransform));
 
 			return playerCharacter;
 		}

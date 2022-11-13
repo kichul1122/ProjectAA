@@ -16,7 +16,9 @@ namespace AA
             // AddMessageBroker: Register for IPublisher<T>/ISubscriber<T>, includes async and buffered.
             //builder.AddMessageBroker<int>();
 
-            builder.AddMessageBroker<CharacterFollow.TargetTransformEvent>();
+            builder.AddMessageBroker<CharacterFollow.TargetTransformMsg>();
+            builder.AddMessageBroker<InputManager.HorizontalMsg>();
+            builder.AddMessageBroker<InputManager.VerticalMsg>();
 
             // also exists AddMessageBroker<TKey, TMessage>, AddRequestHandler, AddAsyncRequestHandler
 

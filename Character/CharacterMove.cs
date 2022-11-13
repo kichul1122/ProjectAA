@@ -72,5 +72,10 @@ namespace AA
 
 			_jumpSubject.OnNext(Unit.Default);
 		}
+
+		private void Move(Vector3 direction)
+		{
+
+		}
 	}
 }
