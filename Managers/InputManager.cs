@@ -29,6 +29,9 @@ namespace AA
         private IPublisher<HorizontalMsg> _horizontalPublisher;
         private IPublisher<VerticalMsg> _verticalPublisher;
 
+        private readonly ReactiveProperty<bool> _jumpButton = new ReactiveProperty<bool>(false);
+        public IReadOnlyReactiveProperty<bool> JumpButton => _jumpButton;
+
         private void Start()
         {
             _horizontalPublisher = Managers.MessagePipe.GetPublisher<HorizontalMsg>();
@@ -47,5 +50,6 @@ namespace AA
         public float Horizontal => UnityEngine.Input.GetAxisRaw(AAString.Horizontal);
         public float Vertical => UnityEngine.Input.GetAxisRaw(AAString.Vertical);
 
+        public bool Jump => UnityEngine.Input.GetButton(AAString.Jump);
     }
 }

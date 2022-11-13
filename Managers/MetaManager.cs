@@ -1,5 +1,7 @@
 ﻿using AA.Meta;
 using AA.Meta.Tables;
+using Cysharp.Threading.Tasks;
+using System.Threading;
 
 namespace AA
 {
@@ -9,11 +11,13 @@ namespace AA
 
         public CharacterTable CharacterTable => DB.CharacterTable;
 
-        public void Load()
+        public async UniTask LoadAsync(CancellationToken ct)
         {
             var builder = new DatabaseBuilder();
 
             //Load Json To Meta (Load MessagePack To Meta)
+
+            await LoadJsonAsync(ct);
 
             builder.Append(new Meta.Character[]
             {
@@ -22,6 +26,11 @@ namespace AA
 
             byte[] data = builder.Build();
             this.DB = new MemoryDatabase(data);
+        }
+
+        private async UniTask LoadJsonAsync(CancellationToken ct)
+        {
+            await UniTask.Delay(100);
         }
     }
 }

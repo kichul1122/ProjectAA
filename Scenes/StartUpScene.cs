@@ -49,6 +49,14 @@ namespace AA
 		}
 
 		#region State
+
+		IEnumerator LoadStartUpData_Enter() => UniTask.ToCoroutine(async () =>
+		{
+			await UniTask.Yield();
+
+			_stateMachine.ChangeState(EStartUpSceneState.LoadPopup);
+		});
+
 		IEnumerator LoadPopup_Enter() => UniTask.ToCoroutine(async () =>
 		{
 			await UniTask.Yield();
@@ -79,7 +87,16 @@ namespace AA
 
 		IEnumerator LoadMeta_Enter() => UniTask.ToCoroutine(async () =>
 		{
-			await UniTask.Yield();
+			try
+			{
+				await Managers.Meta.LoadAsync(this.GetCancellationTokenOnDestroy());
+			}
+			catch (System.Exception e)
+			{
+				Debug.LogWarning(e);
+
+				//Show YesNoPopup e
+			}
 
 			_startUpModel.ChangeState(EStartUpSceneState.Login);
 		});
