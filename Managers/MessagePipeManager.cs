@@ -7,8 +7,10 @@ namespace AA
     /// </summary>
     public class MessagePipeManager : ManagerMonobehaviour
     {
-        private void Start()
+        protected override void Awake()
         {
+            base.Awake();
+
             var builder = new BuiltinContainerBuilder();
 
             builder.AddMessagePipe(/* configure option */);

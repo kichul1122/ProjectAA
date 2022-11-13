@@ -43,5 +43,9 @@ namespace AA
                 .Subscribe(value => _verticalPublisher.Publish(new VerticalMsg(value))).AddTo(this);
 
         }
+
+        public float Horizontal => UnityEngine.Input.GetAxisRaw(AAString.Horizontal);
+        public float Vertical => UnityEngine.Input.GetAxisRaw(AAString.Vertical);
+
     }
 }
