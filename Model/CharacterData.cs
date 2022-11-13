@@ -6,7 +6,7 @@ namespace AA
 
 
 	[System.Serializable]
-	public class CharacterData : IDisposable
+	public class CharacterModel : IDisposable
 	{
 		public Client.Character Client;
 
@@ -21,7 +21,7 @@ namespace AA
 			Server?.Dispose();
 		}
 
-		public CharacterData(Server.Character server, Meta.Character meta)
+		public CharacterModel(Server.Character server, Meta.Character meta)
 		{
 			Server = server;
 			Meta = meta;

@@ -4,7 +4,7 @@ using UniRx;
 namespace AA
 {
 	[System.Serializable]
-	public class StartUpSceneData : IDisposable
+	public class StartUpSceneModel : IDisposable
 	{
 		public ReactiveProperty<EStartUpSceneState> CurrentStartUpStateRP;
 
@@ -14,7 +14,7 @@ namespace AA
 		public int PatchMajorVersion;
 		public int PatchMinorVersion;
 
-		public StartUpSceneData()
+		public StartUpSceneModel()
 		{
 			CurrentStartUpStateRP = new ReactiveProperty<EStartUpSceneState>(EStartUpSceneState.LoadStartUpData);
 		}

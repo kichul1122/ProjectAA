@@ -11,7 +11,7 @@ namespace AA
         {
             private Dictionary<string, GameObject> _prefabs = new Dictionary<string, GameObject>();
 
-            public async UniTask<Character> CreateAsync(string prefabPath, CharacterData characterData, UnityEngine.Component owner)
+            public async UniTask<Character> CreateAsync(string prefabPath, CharacterModel characterData, UnityEngine.Component owner)
             {
                 if (!_prefabs.ContainsKey(prefabPath))
                 {

@@ -8,8 +8,8 @@ namespace AA
     public partial class Character : MonoBehaviour
     {
         [SerializeField]
-        private CharacterData _data;
-        public CharacterData Data => _data;
+        private CharacterModel _data;
+        public CharacterModel Data => _data;
 
         public int ObjectId;
 
@@ -22,7 +22,7 @@ namespace AA
 
         private CompositeDisposable _disposables;
 
-        public Character Construct(CharacterData characterData)
+        public Character Construct(CharacterModel characterData)
         {
             _data = characterData;
             Construct();

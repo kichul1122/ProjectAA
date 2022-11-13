@@ -7,7 +7,7 @@ namespace AA
 {
 	public class FieldScene : MonoBehaviour, IScene
 	{
-		private FieldSceneData _fieldSceneData;
+		private FieldSceneModel _fieldSceneModel;
 
 		public ESceneName Name => ESceneName.Field;
 
@@ -27,7 +27,7 @@ namespace AA
 
 		private async UniTaskVoid SetUp()
 		{
-			_fieldSceneData = Managers.Data.FieldScene;
+			_fieldSceneModel = Managers.Model.FieldScene;
 
 			await CreateMapAsync();
 
@@ -44,15 +44,15 @@ namespace AA
 
 		private async UniTask CreateMapAsync()
 		{
-			var mapPrefab = await Managers.Resource.LoadPrefabAsync(_fieldSceneData.MapPrefabPath, this);
+			var mapPrefab = await Managers.Resource.LoadPrefabAsync(_fieldSceneModel.MapPrefabPath, this);
 			Managers.Resource.Instantiate(mapPrefab);
 		}
 
 		private async UniTask<Character> CreatePlayerAsync()
 		{
-			CharacterData playerCharacterData = Managers.Data.Character.Find(Managers.Data.DefaultPlayerId);
+			CharacterModel playerCharacterModel = Managers.Model.Character.Find(Managers.Model.DefaultPlayerId);
 			Character.Factory playerFactory = new Character.Factory();
-			Character playerCharacter = await playerFactory.CreateAsync(_fieldSceneData.PlayerPrefabPath, playerCharacterData, this);
+			Character playerCharacter = await playerFactory.CreateAsync(_fieldSceneModel.PlayerPrefabPath, playerCharacterModel, this);
 			Managers.Object.AddPlayer(playerCharacter);
 
 			return playerCharacter;
@@ -63,7 +63,7 @@ namespace AA
 			EnemyPoolSpawner enemyPoolSpawner = new GameObject().AddComponent<EnemyPoolSpawner>();
 			enemyPoolSpawner.gameObject.name = nameof(EnemyPoolSpawner);
 
-			var enemyPrefab = await Managers.Resource.LoadPrefabAsync(_fieldSceneData.EnemyPrefabPath, this);
+			var enemyPrefab = await Managers.Resource.LoadPrefabAsync(_fieldSceneModel.EnemyPrefabPath, this);
 			Character.Pool enemyPool = new Character.Pool(enemyPrefab);
 
 			var enemySpawnerSetting = new EnemyPoolSpawner.Setting() { spawnInterval = 1d };

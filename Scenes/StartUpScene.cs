@@ -9,7 +9,7 @@ namespace AA
 
 	public partial class StartUpScene : MonoBehaviour, IScene
 	{
-		private StartUpSceneData _startUpModel;
+		private StartUpSceneModel _startUpModel;
 
 		private StateMachine<EStartUpSceneState, StateEmptyDriver> _stateMachine;
 
@@ -35,7 +35,7 @@ namespace AA
 
 		private async UniTaskVoid SetUpAsync()
 		{
-			_startUpModel = Managers.Data.StartUp;
+			_startUpModel = Managers.Model.StartUp;
 
 			_stateMachine = new StateMachine<EStartUpSceneState, StateEmptyDriver>(this);
 

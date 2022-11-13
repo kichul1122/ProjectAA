@@ -29,7 +29,7 @@ namespace AA
 
         [ShowInInspector]
         [ReadOnly]
-        public static DataManager Data { get; set; }
+        public static ModelManager Model { get; set; }
 
         [ShowInInspector]
         [ReadOnly]
@@ -52,7 +52,7 @@ namespace AA
                 case FadeManager fade: Fade = fade; break;
                 case ResourceManager resource: Resource = resource; break;
                 case ObjectManager @object: Object = @object; break;
-                case DataManager data: Data = data; break;
+                case ModelManager model: Model = model; break;
                 case MetaManager meta: Meta = meta; break;
                 case NetworkManager network: Network = network; break;
                 case MessagePipeManager messagePipe: MessagePipe = messagePipe; break;
@@ -68,7 +68,7 @@ namespace AA
             UI = default;
             Resource = default;
             Object = default;
-            Data = default;
+            Model = default;
             Meta = default;
             Network = default;
             MessagePipe = default;

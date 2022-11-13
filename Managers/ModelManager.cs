@@ -9,21 +9,21 @@ namespace AA
     /// <summary>
     /// Global Model Manager
     /// </summary>
-    public class DataManager : ManagerMonobehaviour
+    public class ModelManager : ManagerMonobehaviour
     {
         public long DefaultPlayerId = 1122;
 
-        public StartUpSceneData StartUp => Data.StartUpScene;
+        public StartUpSceneModel StartUp => Model.StartUpScene;
 
-        public FieldSceneData FieldScene => Data.FieldScene;
+        public FieldSceneModel FieldScene => Model.FieldScene;
 
-        public CharacterDatas Character => Data.Character;
+        public CharacterModels Character => Model.Character;
 
-        public Data Data = new Data();
+        public Model Model = new Model();
 
         public void OnDestroy()
         {
-            Data.Dispose();
+            Model.Dispose();
         }
 
         [Button]
