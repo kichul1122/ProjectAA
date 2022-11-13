@@ -1,6 +1,6 @@
 using MasterMemory;
 using MessagePack;
-using UnityEngine;
+using Sirenix.OdinInspector;
 
 namespace AA.Meta
 {
@@ -9,7 +9,7 @@ namespace AA.Meta
     public class Character
     {
         [PrimaryKey]
-        [field: SerializeField]
+        [ShowInInspector]
         public long CharacterId { get; }
 
         public Character(long characterId)

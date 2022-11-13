@@ -1,8 +1,8 @@
 using UniRx;
-using UnityEngine;
 
 namespace AA.Server
 {
+	[System.Serializable]
 	public class Character
 	{
 		public string Seq;

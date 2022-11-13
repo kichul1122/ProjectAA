@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -26,19 +23,21 @@ namespace AA
 		private LayerMask _groundLayerMask;
 		private Rigidbody _rigidbody;
 
-		private IReadOnlyReactiveProperty<bool> _jumpButton;
+		//private IReadOnlyReactiveProperty<bool> _jumpButton;
 
 		private void Awake()
 		{
-			Construct(_setting);
+			var setting = GetComponent<CharacterSetting>();
+
+			Construct(setting != null ? setting.Move : _setting);
 		}
 
 		public void Construct(Setting setting)
 		{
 			_setting = setting;
 
-			var characterInput = GetComponent<CharacterInput>();
-			_jumpButton = characterInput.JumpButton;
+			//var characterInput = GetComponent<CharacterInput>();
+			//_jumpButton = characterInput.JumpButton;
 
 			_rigidbody = GetComponent<Rigidbody>();
 		}
@@ -57,14 +56,14 @@ namespace AA
 				})
 				.AddTo(this);
 
-			_jumpButton
-				.Where(x => x && _isGrounded.Value)
-				.ObserveOnMainThread(MainThreadDispatchType.FixedUpdate) //Input은 업데이트, 다음 FixedUpdate에서 실행
-				.Subscribe(_ =>
-				{
-					Jump();
-				})
-				.AddTo(this);
+			//_jumpButton
+			//	.Where(x => x && _isGrounded.Value)
+			//	.ObserveOnMainThread(MainThreadDispatchType.FixedUpdate) //Input은 업데이트, 다음 FixedUpdate에서 실행
+			//	.Subscribe(_ =>
+			//	{
+			//		Jump();
+			//	})
+			//	.AddTo(this);
 		}
 
 		private void Jump()

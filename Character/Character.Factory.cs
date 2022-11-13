@@ -1,29 +1,23 @@
 using Cysharp.Threading.Tasks;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace AA
 {
     public partial class Character : MonoBehaviour
     {
+        public static Factory DefaultFactory = new();
+
         public class Factory
         {
-            private Dictionary<string, GameObject> _prefabs = new Dictionary<string, GameObject>();
-
-            public async UniTask<Character> CreateAsync(string prefabPath, CharacterModel characterData, UnityEngine.Component owner)
+            public async UniTask<Character> CreateAsync(string prefabPath, CharacterModel characterModel, UnityEngine.Component owner)
             {
-                if (!_prefabs.ContainsKey(prefabPath))
-                {
-                    var characterPrefabGO = await Managers.Resource.LoadPrefabAsync(prefabPath, owner);
+                var characterPrefabGO = await Managers.Resource.LoadPrefabAsync(prefabPath, owner);
 
-                    _prefabs.Add(prefabPath, characterPrefabGO);
-                }
+                var newCharacterGO = Managers.Resource.Instantiate(characterPrefabGO);
 
-                var newCharacterGO = Managers.Resource.Instantiate(_prefabs[prefabPath]);
                 Character newCharacter = newCharacterGO.GetComponent<Character>();
 
-                newCharacter.Construct(characterData);
+                newCharacter.Construct(characterModel);
 
                 return newCharacter;
             }

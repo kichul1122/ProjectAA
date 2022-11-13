@@ -1,5 +1,5 @@
 using Cysharp.Threading.Tasks;
-using System.Linq;
+using MessagePipe;
 using UniRx;
 using UnityEngine;
 
@@ -8,6 +8,7 @@ namespace AA
 	public class FieldScene : MonoBehaviour, IScene
 	{
 		private FieldSceneModel _fieldSceneModel;
+		private IPublisher<CharacterFollow.TargetTransformEvent> _characterFollwPublisher;
 
 		public ESceneName Name => ESceneName.Field;
 
@@ -23,11 +24,11 @@ namespace AA
 			await UniTask.Yield();
 		}
 
-		private Subject<Player> OnStart = new Subject<Player>();
-
 		private async UniTaskVoid SetUp()
 		{
 			_fieldSceneModel = Managers.Model.FieldScene;
+
+			_characterFollwPublisher = Managers.MessagePipe.GetPublisher<CharacterFollow.TargetTransformEvent>();
 
 			await CreateMapAsync();
 
@@ -37,9 +38,7 @@ namespace AA
 
 			await Managers.Fade.FadeInAsync();
 
-			StartField();
-
-			TestIntervalDieEnemies();
+			//TestIntervalDieEnemies();
 		}
 
 		private async UniTask CreateMapAsync()
@@ -48,12 +47,16 @@ namespace AA
 			Managers.Resource.Instantiate(mapPrefab);
 		}
 
+		//CharacterSetting Component 에서 가져오자
+
 		private async UniTask<Character> CreatePlayerAsync()
 		{
 			CharacterModel playerCharacterModel = Managers.Model.Character.Find(Managers.Model.DefaultPlayerId);
-			Character.Factory playerFactory = new Character.Factory();
-			Character playerCharacter = await playerFactory.CreateAsync(_fieldSceneModel.PlayerPrefabPath, playerCharacterModel, this);
+
+			Character playerCharacter = await Character.DefaultFactory.CreateAsync(_fieldSceneModel.PlayerPrefabPath, playerCharacterModel, this);
 			Managers.Object.AddPlayer(playerCharacter);
+
+			_characterFollwPublisher.Publish(new CharacterFollow.TargetTransformEvent(playerCharacter.CachedTransform));
 
 			return playerCharacter;
 		}
@@ -70,23 +73,18 @@ namespace AA
 			enemyPoolSpawner.Construct(enemyPool, enemySpawnerSetting, Managers.Object);
 		}
 
-		private void TestIntervalDieEnemies()
-		{
-			Observable.Interval(System.TimeSpan.FromSeconds(1.5d)).Subscribe(_ =>
-			{
-				if (Managers.Object.Enemies.Count > 0)
-				{
-					int rnd = UnityEngine.Random.Range(0, Managers.Object.Enemies.Count);
+		//private void TestIntervalDieEnemies()
+		//{
+		//	Observable.Interval(System.TimeSpan.FromSeconds(1.5d)).Subscribe(_ =>
+		//	{
+		//		if (Managers.Object.Enemies.Count > 0)
+		//		{
+		//			int rnd = UnityEngine.Random.Range(0, Managers.Object.Enemies.Count);
 
-					var enemies = Managers.Object.Enemies.Values.ToList();
-					enemies[rnd].Die();
-				}
-			}).AddTo(this);
-		}
-
-		private void StartField()
-		{
-			// OnStart.Subscribe(currentPlayer => currentPlayer.DoStart()).AddTo(this);
-		}
+		//			var enemies = Managers.Object.Enemies.Values.ToList();
+		//			enemies[rnd].Die();
+		//		}
+		//	}).AddTo(this);
+		//}
 	}
 }

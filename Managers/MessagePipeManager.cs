@@ -14,7 +14,9 @@ namespace AA
             builder.AddMessagePipe(/* configure option */);
 
             // AddMessageBroker: Register for IPublisher<T>/ISubscriber<T>, includes async and buffered.
-            builder.AddMessageBroker<int>();
+            //builder.AddMessageBroker<int>();
+
+            builder.AddMessageBroker<CharacterFollow.TargetTransformEvent>();
 
             // also exists AddMessageBroker<TKey, TMessage>, AddRequestHandler, AddAsyncRequestHandler
 
@@ -26,10 +28,10 @@ namespace AA
             GlobalMessagePipe.SetProvider(provider);
 
             // --- to use MessagePipe, you can use from GlobalMessagePipe.
-            var p = GetPublisher<int>();
-            var s = GetSubscriber<int>();
+            // var p = GetPublisher<int>();
+            // var s = GetSubscriber<int>();
 
-            var d = DisposableBag.CreateBuilder();
+            // var d = DisposableBag.CreateBuilder();
 
             //s.Subscribe(x => Debug.Log($"First: {x}")).AddTo(d);
             //s.Subscribe(x => Debug.Log($"Second: {x}")).AddTo(d);
@@ -37,9 +39,9 @@ namespace AA
             //p.Publish(10);
             //p.Publish(20);
             //p.Publish(30);
-
-            var disposable = d.Build();
-            disposable.Dispose();
+            //
+            //var disposable = d.Build();
+            //disposable.Dispose();
         }
 
         public IPublisher<TMessage> GetPublisher<TMessage>() => GlobalMessagePipe.GetPublisher<TMessage>();

@@ -1,15 +1,11 @@
-using Cysharp.Threading.Tasks;
 using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
 
 namespace AA
 {
     public partial class Character : MonoBehaviour
     {
-        [SerializeField]
-        private CharacterModel _data;
-        public CharacterModel Data => _data;
+        public CharacterModel Model => _setting.Model;
 
         public int ObjectId;
 
@@ -17,14 +13,18 @@ namespace AA
 
         #region Character Components
         private Transform _cachedTransform;
+        public Transform CachedTransform => _cachedTransform;
         private Renderer _renderer;
+
+        private CharacterSetting _setting;
         #endregion
 
         private CompositeDisposable _disposables;
 
-        public Character Construct(CharacterModel characterData)
+        public Character Construct(CharacterModel characterModel)
         {
-            _data = characterData;
+            _setting = this.GetOrAddComponent<CharacterSetting>().Construct(characterModel);
+
             Construct();
 
             return this;
