@@ -1,4 +1,5 @@
-using System.Numerics;
+
+using UnityEngine;
 
 namespace AA
 {
@@ -8,12 +9,12 @@ namespace AA
 
         public override float GetHorizontalMovementInput()
         {
-            return Direction.X;
+            return Direction.x;
         }
 
         public override float GetVerticalMovementInput()
         {
-            return Direction.Z;
+            return Direction.z;
         }
 
         public override bool IsJumpKeyPressed()
