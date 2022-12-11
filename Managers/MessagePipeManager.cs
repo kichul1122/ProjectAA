@@ -21,6 +21,7 @@ namespace AA
             builder.AddMessageBroker<CharacterFollow.TargetTransformMsg>();
             builder.AddMessageBroker<InputManager.HorizontalMsg>();
             builder.AddMessageBroker<InputManager.VerticalMsg>();
+            builder.AddMessageBroker<InputManager.DirectionMsg>();
 
             // also exists AddMessageBroker<TKey, TMessage>, AddRequestHandler, AddAsyncRequestHandler
 

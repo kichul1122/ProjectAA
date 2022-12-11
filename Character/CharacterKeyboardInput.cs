@@ -1,27 +1,26 @@
+using MessagePipe;
+using System;
+
 namespace AA
 {
-	public class CharacterKeyboardInput : CMF.CharacterInput
+	public class CharacterKeyboardInput : CharacterInput
 	{
-		private InputManager _input;
+		private IDisposable _disposable;
 
 		private void Start()
 		{
-			_input = Managers.Input;
+			var directionPublisher = Managers.MessagePipe.GetSubscriber<InputManager.DirectionMsg>();
+
+			var d = DisposableBag.CreateBuilder();
+
+			directionPublisher.Subscribe(msg => Direction = msg.Value).AddTo(d);
+
+			_disposable = d.Build();
 		}
 
-		public override float GetHorizontalMovementInput()
+		private void OnDestroy()
 		{
-			return _input.Horizontal;
-		}
-
-		public override float GetVerticalMovementInput()
-		{
-			return _input.Vertical;
-		}
-
-		public override bool IsJumpKeyPressed()
-		{
-			return _input.Jump;
+			_disposable.Dispose();
 		}
 	}
 }

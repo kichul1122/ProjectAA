@@ -43,4 +43,13 @@ namespace AA
         Enemy,
         Max
     }
+
+    public enum ECharacterState
+    {
+        None,
+        Idle,
+        Move,
+        Attack,
+        Jump,
+    }
 }

@@ -31,7 +31,7 @@ namespace AA
 
 			await CreateMapAsync();
 
-			await SpawnEnemiesAsync();
+			SpawnEnemies();
 
 			await CreatePlayerAsync();
 
@@ -59,7 +59,7 @@ namespace AA
 			return playerCharacter;
 		}
 
-		private async UniTask SpawnEnemiesAsync()
+		private void SpawnEnemies()
 		{
 			EnemyPoolSpawner enemyPoolSpawner = new GameObject().AddComponent<EnemyPoolSpawner>();
 			enemyPoolSpawner.gameObject.name = nameof(EnemyPoolSpawner);
