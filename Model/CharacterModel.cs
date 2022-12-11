@@ -3,16 +3,14 @@
 
 namespace AA
 {
-
-
 	[System.Serializable]
 	public class CharacterModel : IDisposable
 	{
-		public Client.Character Client;
+		public CharacterClientData Client;
 
-		public Server.Character Server;
+		public CharacterServerData Server;
 
-		public Meta.Character Meta;
+		public CharacterMetaData Meta;
 
 		public string Seq => Server.Seq;
 
@@ -21,11 +19,11 @@ namespace AA
 			Server?.Dispose();
 		}
 
-		public CharacterModel(Server.Character server, Meta.Character meta)
+		public CharacterModel(CharacterServerData server, CharacterMetaData meta)
 		{
 			Server = server;
 			Meta = meta;
-			Client = new Client.Character();
+			Client = new CharacterClientData();
 		}
 
 		//private CharacterData() { }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace AA
 {
-    public partial class Character : MonoBehaviour
+    public class Character : MonoBehaviour
     {
         public CharacterModel Model => _setting.Model;
 
@@ -17,6 +17,8 @@ namespace AA
         private Renderer _renderer;
 
         private CharacterSetting _setting;
+
+        public CharacterObservable Observable = new CharacterObservable();
         #endregion
 
         private CompositeDisposable _disposables;
@@ -42,12 +44,12 @@ namespace AA
 
         private void OnDestroy()
         {
-            Dispose();
+            Observable.Dispose();
         }
 
         public void Die()
         {
-            _onDieSubject.OnNext(this);
+            Observable.OnDieAsObserver().OnNext(this);
         }
 
         public void ChangeMaterial(Material material)

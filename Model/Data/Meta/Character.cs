@@ -2,17 +2,17 @@ using MasterMemory;
 using MessagePack;
 using Sirenix.OdinInspector;
 
-namespace AA.Meta
+namespace AA
 {
     [MemoryTable("character"), MessagePackObject(true)]
     [System.Serializable]
-    public class Character
+    public class CharacterMetaData
     {
         [PrimaryKey]
         [ShowInInspector]
         public long CharacterId { get; }
 
-        public Character(long characterId)
+        public CharacterMetaData(long characterId)
         {
             this.CharacterId = characterId;
         }

@@ -1,6 +1,5 @@
 using UniRx.Toolkit;
 using UnityEngine;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace AA
 {
@@ -8,9 +7,9 @@ namespace AA
 	{
 		private readonly GameObject _prefab;
 
-		public AAPool(string prefabPath)
+		public AAPool(string prefabPath, Component parent)
 		{
-			_prefab = Managers.Resource.LoadPrefab(prefabPath);
+			_prefab = Managers.Resource.LoadPrefab(prefabPath, parent);
 		}
 
 		public AAPool(GameObject prefab)
@@ -41,25 +40,25 @@ namespace AA
 	/// Prefab To GameObject Pool
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class AAAddressablesPool<T> : ObjectPool<T> where T : Component
-	{
-		private readonly GameObject _prefab;
+	//public class AAAddressablesPool<T> : ObjectPool<T> where T : Component
+	//{
+	//	private readonly GameObject _prefab;
 
-		public AAAddressablesPool(GameObject prefab)
-		{
-			_prefab = prefab;
-		}
+	//	public AAAddressablesPool(GameObject prefab)
+	//	{
+	//		_prefab = prefab;
+	//	}
 
-		protected override T CreateInstance()
-		{
-			GameObject newGO = Managers.Resource.Instantiate(_prefab);
+	//	protected override T CreateInstance()
+	//	{
+	//		GameObject newGO = Managers.Resource.Instantiate(_prefab);
 
-			return newGO.GetComponent<T>();
-		}
+	//		return newGO.GetComponent<T>();
+	//	}
 
-		protected override void Dispose(bool disposing)
-		{
-			base.Dispose(disposing);
-		}
-	}
+	//	protected override void Dispose(bool disposing)
+	//	{
+	//		base.Dispose(disposing);
+	//	}
+	//}
 }

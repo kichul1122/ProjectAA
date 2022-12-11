@@ -1,23 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UniRx;
 using System;
+using UniRx;
+using UnityEngine;
 
 namespace AA
 {
-    public class EnemySpawner : MonoBehaviour
-    {
-        Character.Pool pool;
-        Character.Factory factory;
-        Setting setting;
+	public class EnemySpawner : MonoBehaviour
+	{
+		CharacterPool pool;
+		CharacterFactory factory;
+		Setting setting;
 
 		public Character[] CharacterPrefabs;
 
-        public void Constructor(Character.Pool pool, Setting setting)
+		public void Constructor(CharacterPool pool, Setting setting)
 		{
-            this.pool = pool;
-            this.setting = setting;
+			this.pool = pool;
+			this.setting = setting;
 
 			//Observable.Interval(TimeSpan.FromSeconds(setting.spawnInterval)).Subscribe(_ =>
 			//{
@@ -50,8 +48,8 @@ namespace AA
 		}
 
 		public class Setting
-        {
+		{
 			public double spawnInterval = 1d;
-        }
-    }
+		}
+	}
 }

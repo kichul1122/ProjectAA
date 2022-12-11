@@ -1,10 +1,10 @@
 using UniRx;
 using UnityEngine;
 
-namespace AA.Client
+namespace AA
 {
     [System.Serializable]
-    public class Character
+    public class CharacterClientData
     {
         public ReactiveProperty<Vector3> Position = new ReactiveProperty<Vector3>();
 

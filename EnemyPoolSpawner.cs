@@ -4,11 +4,11 @@ namespace AA
 {
     public class EnemyPoolSpawner : MonoBehaviour
     {
-        private Character.Pool pool;
+        private CharacterPool pool;
         private Setting setting;
         private ObjectManager objectManager;
 
-        public void Construct(Character.Pool pool, Setting setting, ObjectManager objectManager)
+        public void Construct(CharacterPool pool, Setting setting, ObjectManager objectManager)
         {
             this.pool = pool;
             this.setting = setting;

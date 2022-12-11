@@ -29,15 +29,15 @@ namespace AA
         [Button]
         public void DoMessagePack()
         {
-            DB.Character character = new DB.Character();
+            CharacterDB character = new CharacterDB();
 
             // Call Serialize/Deserialize, that's all.
             byte[] bytes = MessagePackSerializer.Serialize(character);
-            DB.Character mc2 = MessagePackSerializer.Deserialize<DB.Character>(bytes);
+            CharacterDB mc2 = MessagePackSerializer.Deserialize<CharacterDB>(bytes);
 
             var dataToJson = MessagePackSerializer.SerializeToJson(character);
             var jsonToBin = MessagePackSerializer.ConvertFromJson(dataToJson);
-            DB.Character mc3 = MessagePackSerializer.Deserialize<DB.Character>(jsonToBin);
+            CharacterDB mc3 = MessagePackSerializer.Deserialize<CharacterDB>(jsonToBin);
             Console.WriteLine(dataToJson);
 
             // You can dump MessagePack binary blobs to human readable json.

@@ -1,19 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UniRx;
 using System;
+using UniRx;
+using UnityEngine;
 
 namespace AA
 {
 	public class EnemyFactorySpawner : MonoBehaviour
 	{
-		private Character.Factory factory;
+		private CharacterFactory factory;
 		private Setting setting;
 
 		public Character[] CharacterPrefabs;
 
-		public void Constructor(Character.Factory factory, Setting setting)
+		public void Constructor(CharacterFactory factory, Setting setting)
 		{
 			this.factory = factory;
 			this.setting = setting;

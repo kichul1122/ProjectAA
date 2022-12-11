@@ -1,10 +1,10 @@
 using MessagePack;
 
-namespace AA.DB
+namespace AA
 {
 	[MessagePackObject]
 	[System.Serializable]
-	public class Character
+	public class CharacterDB
 	{
 		[Key(0)]
 		public string Seq { get; set; }

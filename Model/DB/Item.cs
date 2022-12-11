@@ -1,6 +1,6 @@
 namespace AA.DB
 {
-    public class Item
+    public class ItemDB
     {
 
     }

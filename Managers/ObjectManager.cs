@@ -22,14 +22,14 @@ namespace AA
         {
             Players.Add(playerCharacter.ObjectId, playerCharacter);
 
-            playerCharacter.OnDieAsObservable().Take(1).Subscribe(_ => Players.Remove(_.ObjectId)).AddTo(this);
+            playerCharacter.Observable.OnDieAsObservable().Take(1).Subscribe(_ => Players.Remove(_.ObjectId)).AddTo(this);
         }
 
         public void AddEnemy(Character enemyCharacter)
         {
             Enemies.Add(enemyCharacter.ObjectId, enemyCharacter);
 
-            enemyCharacter.OnDieAsObservable().Take(1).Subscribe(_ => Enemies.Remove(_.ObjectId)).AddTo(this);
+            enemyCharacter.Observable.OnDieAsObservable().Take(1).Subscribe(_ => Enemies.Remove(_.ObjectId)).AddTo(this);
         }
 
         public bool IsExistPlayer() => _gameObjectBridge.IsExistPlayer();

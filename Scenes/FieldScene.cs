@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using MessagePipe;
-using UniRx;
 using UnityEngine;
 
 namespace AA
@@ -43,8 +42,7 @@ namespace AA
 
 		private async UniTask CreateMapAsync()
 		{
-			var mapPrefab = await Managers.Resource.LoadPrefabAsync(_fieldSceneModel.MapPrefabPath, this);
-			Managers.Resource.Instantiate(mapPrefab);
+			await Managers.Resource.InstantiateAsync(_fieldSceneModel.MapPrefabPath, this);
 		}
 
 		//CharacterSetting Component 에서 가져오자
@@ -53,7 +51,7 @@ namespace AA
 		{
 			CharacterModel playerCharacterModel = Managers.Model.Character.Find(Managers.Model.DefaultPlayerId);
 
-			Character playerCharacter = await Character.DefaultFactory.CreateAsync(_fieldSceneModel.PlayerPrefabPath, playerCharacterModel, this);
+			Character playerCharacter = await CharacterFactory.Default.CreateAsync(_fieldSceneModel.PlayerPrefabPath, playerCharacterModel, this);
 			Managers.Object.AddPlayer(playerCharacter);
 
 			_characterFollwPublisher.Publish(new CharacterFollow.TargetTransformMsg(playerCharacter.CachedTransform));
@@ -67,7 +65,7 @@ namespace AA
 			enemyPoolSpawner.gameObject.name = nameof(EnemyPoolSpawner);
 
 			var enemyPrefab = await Managers.Resource.LoadPrefabAsync(_fieldSceneModel.EnemyPrefabPath, this);
-			Character.Pool enemyPool = new Character.Pool(enemyPrefab);
+			CharacterPool enemyPool = new CharacterPool(enemyPrefab);
 
 			var enemySpawnerSetting = new EnemyPoolSpawner.Setting() { spawnInterval = 1d };
 			enemyPoolSpawner.Construct(enemyPool, enemySpawnerSetting, Managers.Object);

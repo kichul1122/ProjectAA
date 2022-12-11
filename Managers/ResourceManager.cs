@@ -116,7 +116,17 @@ namespace AA
 			return Object.Instantiate(prefab);
 		}
 
-		public GameObject LoadPrefab(string path, Component owner = null)
+		public async UniTask<GameObject> InstantiateAsync(string prefabPath, Component owner)
+		{
+			var prefab = await Managers.Resource.LoadPrefabAsync(prefabPath, owner);
+
+			return Object.Instantiate(prefab);
+		}
+		//var characterPrefabGO = await Managers.Resource.LoadPrefabAsync(prefabPath, owner);
+
+		//var newCharacterGO = Managers.Resource.Instantiate(characterPrefabGO);
+
+		public GameObject LoadPrefab(string path, Component owner)
 		{
 			var handle = Addressables.LoadAssetAsync<GameObject>(path);
 
@@ -128,15 +138,12 @@ namespace AA
 				return null;
 			}
 
-			if (owner != null)
-			{
-				owner.OnDestroyAsObservable().Subscribe(_ => Release(prefab));
-			}
+			owner.OnDestroyAsObservable().Subscribe(_ => Release(handle));
 
 			return prefab;
 		}
 
-		public async UniTask<GameObject> LoadPrefabAsync(string path, Component owner = null)
+		public async UniTask<GameObject> LoadPrefabAsync(string path, Component owner)
 		{
 			var handle = Addressables.LoadAssetAsync<GameObject>(path);
 
@@ -148,15 +155,12 @@ namespace AA
 				return null;
 			}
 
-			if (owner != null)
-			{
-				owner.OnDestroyAsObservable().Subscribe(_ => Release(prefab));
-			}
+			owner.OnDestroyAsObservable().Subscribe(_ => Release(handle));
 
 			return prefab;
 		}
 
-		public T LoadPrefab<T>(string path, Component owner = null) where T : UnityEngine.Component
+		public T LoadPrefab<T>(string path, Component owner) where T : UnityEngine.Component
 		{
 			var handle = Addressables.LoadAssetAsync<GameObject>(path);
 			var prefab = handle.WaitForCompletion();
@@ -167,15 +171,12 @@ namespace AA
 				return null;
 			}
 
-			if (owner != null)
-			{
-				owner.OnDestroyAsObservable().Subscribe(_ => Release(prefab));
-			}
+			owner.OnDestroyAsObservable().Subscribe(_ => Release(handle));
 
 			return prefab.GetComponent<T>();
 		}
 
-		public async UniTask<T> LoadPrefabAsync<T>(string path, Component owner = null) where T : UnityEngine.Component
+		public async UniTask<T> LoadPrefabAsync<T>(string path, Component owner) where T : UnityEngine.Component
 		{
 			var handle = Addressables.LoadAssetAsync<GameObject>(path);
 
@@ -187,15 +188,12 @@ namespace AA
 				return null;
 			}
 
-			if (owner != null)
-			{
-				owner.OnDestroyAsObservable().Subscribe(_ => Release(prefab));
-			}
+			owner.OnDestroyAsObservable().Subscribe(_ => Release(handle));
 
 			return prefab.GetComponent<T>();
 		}
 
-		public T LoadAsset<T>(string path, Component owner = null) where T : UnityEngine.Object
+		public T LoadAsset<T>(string path, Component owner) where T : UnityEngine.Object
 		{
 			var handle = Addressables.LoadAssetAsync<T>(path);
 			var asset = handle.WaitForCompletion();
@@ -206,15 +204,12 @@ namespace AA
 				return null;
 			}
 
-			if (owner != null)
-			{
-				owner.OnDestroyAsObservable().Subscribe(_ => Release(asset));
-			}
+			owner.OnDestroyAsObservable().Subscribe(_ => Release(handle));
 
 			return asset;
 		}
 
-		public async UniTask<T> LoadAssetAsync<T>(string path, Component owner = null) where T : UnityEngine.Object
+		public async UniTask<T> LoadAssetAsync<T>(string path, Component owner) where T : UnityEngine.Object
 		{
 			var handle = Addressables.LoadAssetAsync<T>(path);
 
@@ -226,10 +221,7 @@ namespace AA
 				return null;
 			}
 
-			if (owner != null)
-			{
-				owner.OnDestroyAsObservable().Subscribe(_ => Release(asset));
-			}
+			owner.OnDestroyAsObservable().Subscribe(_ => Release(handle));
 
 			return asset;
 		}
@@ -239,11 +231,11 @@ namespace AA
 		//	Addressables.Release(handle);
 		//}
 
-		private void Release<T>(T instance) where T : UnityEngine.Object
+		private void Release<T>(AsyncOperationHandle<T> handle)
 		{
-			if (Application.isEditor) return; //Addressables.Release was called on an object that Addressables was not previously aware of.  Thus nothing is being released
+			//if (Application.isEditor) return; //Addressables.Release was called on an object that Addressables was not previously aware of.  Thus nothing is being released
 
-			Addressables.Release(instance);
+			Addressables.Release(handle);
 		}
 
 		//public new void Destroy(UnityEngine.Object obj)

@@ -1,9 +1,9 @@
 using UniRx;
 
-namespace AA.Server
+namespace AA
 {
 	[System.Serializable]
-	public class Character
+	public class CharacterServerData
 	{
 		public string Seq;
 		public long Id;
@@ -20,7 +20,7 @@ namespace AA.Server
 			Level?.Dispose();
 		}
 
-		public void From(DB.Character data)
+		public void From(CharacterDB data)
 		{
 			Seq = data.Seq;
 			ClickCount.Value = data.ClickCount;
@@ -29,9 +29,9 @@ namespace AA.Server
 		}
 
 
-		public DB.Character To()
+		public CharacterDB To()
 		{
-			return new DB.Character
+			return new CharacterDB
 			{
 				Seq = Seq,
 				ClickCount = ClickCount.Value,
