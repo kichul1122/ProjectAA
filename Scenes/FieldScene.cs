@@ -64,8 +64,7 @@ namespace AA
 			EnemyPoolSpawner enemyPoolSpawner = new GameObject().AddComponent<EnemyPoolSpawner>();
 			enemyPoolSpawner.gameObject.name = nameof(EnemyPoolSpawner);
 
-			var enemyPrefab = await Managers.Resource.LoadPrefabAsync(_fieldSceneModel.EnemyPrefabPath, this);
-			CharacterPool enemyPool = new CharacterPool(enemyPrefab);
+			CharacterPool enemyPool = new CharacterPool(_fieldSceneModel.EnemyPrefabPath, this);
 
 			var enemySpawnerSetting = new EnemyPoolSpawner.Setting() { spawnInterval = 1d };
 			enemyPoolSpawner.Construct(enemyPool, enemySpawnerSetting, Managers.Object);
