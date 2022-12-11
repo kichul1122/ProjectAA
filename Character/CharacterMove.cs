@@ -25,13 +25,6 @@ namespace AA
 
 		//private IReadOnlyReactiveProperty<bool> _jumpButton;
 
-		private void Awake()
-		{
-			var setting = GetComponent<CharacterSetting>();
-
-			Construct(setting != null ? setting.Move : _setting);
-		}
-
 		public void Construct(Setting setting)
 		{
 			_setting = setting;

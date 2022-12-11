@@ -5,7 +5,7 @@ namespace AA
 {
     public class Character : MonoBehaviour
     {
-        public CharacterModel Model => _setting.Model;
+        public CharacterModel Model;
 
         public int ObjectId;
 
@@ -16,16 +16,14 @@ namespace AA
         public Transform CachedTransform => _cachedTransform;
         private Renderer _renderer;
 
-        private CharacterSetting _setting;
-
         public CharacterObservable Observable = new CharacterObservable();
         #endregion
 
         private CompositeDisposable _disposables;
 
-        public Character Construct(CharacterModel characterModel)
+        public Character Construct(CharacterModel model)
         {
-            _setting = this.GetOrAddComponent<CharacterSetting>().Construct(characterModel);
+            Model = model;
 
             Construct();
 
