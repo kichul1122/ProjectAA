@@ -10,7 +10,7 @@ namespace AA
 
 		public ItemModels Item = new();
 
-		public StatModel Stat;
+		public PlayerStatModel Stat;
 
 		public void Dispose()
 		{
@@ -21,7 +21,7 @@ namespace AA
 			Stat?.Dispose();
 		}
 
-		public void SetStatModel(StatModel statModel)
+		public void SetStatModel(PlayerStatModel statModel)
 		{
 			Stat = statModel;
 		}

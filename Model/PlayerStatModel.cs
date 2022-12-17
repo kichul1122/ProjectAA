@@ -3,7 +3,7 @@ using UniRx;
 namespace AA
 {
 	[System.Serializable]
-	public class StatModel : System.IDisposable
+	public class PlayerStatModel : System.IDisposable
 	{
 		public CharacterModel characterModel;
 
@@ -13,9 +13,9 @@ namespace AA
 
 		private CompositeDisposable _disposables;
 
-		public StatModel() { }
+		public PlayerStatModel() { }
 
-		public StatModel(CharacterModel characterModel, ItemModels itemModels)
+		public PlayerStatModel(CharacterModel characterModel, ItemModels itemModels)
 		{
 			this.characterModel = characterModel;
 			this.itemModels = itemModels;
