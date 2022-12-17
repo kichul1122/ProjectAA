@@ -22,6 +22,8 @@ namespace AA
 		public void Update(EStat eStat, double value)
 		{
 			Formula.Calculate(this, eStat, value);
+
+			_onUpdateSubject?.OnNext(new StatModifier(eStat, value));
 		}
 
 		public void Update(StatModifier statModifier)
@@ -54,15 +56,7 @@ namespace AA
 
 		public void Dispose()
 		{
-			try
-			{
-				_onUpdateSubject.OnCompleted();
-			}
-			finally
-			{
-				_onUpdateSubject.Dispose();
-				_onUpdateSubject = null;
-			}
+			AAHelper.DisposeSubject(ref _onUpdateSubject);
 		}
 
 		[Button]

@@ -25,6 +25,8 @@ namespace AA
 
 		private async UniTaskVoid SetUp()
 		{
+			Debug.Log($"FieldScene SetUp Start");
+
 			_fieldSceneModel = Managers.Model.FieldScene;
 
 			_characterFollwPublisher = Managers.MessagePipe.GetPublisher<CharacterFollow.TargetTransformMsg>();
@@ -38,6 +40,8 @@ namespace AA
 			await Managers.Fade.FadeInAsync();
 
 			//TestIntervalDieEnemies();
+
+			Debug.Log($"FieldScene SetUp Finish");
 		}
 
 		private async UniTask CreateMapAsync()

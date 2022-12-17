@@ -13,7 +13,7 @@ namespace AA
 
 			Character newCharacter = newCharacterGO.GetComponent<Character>();
 
-			newCharacter.Construct(characterModel);
+			newCharacter.Construct();
 
 			return newCharacter;
 		}

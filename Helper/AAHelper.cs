@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 namespace AA
@@ -11,6 +10,22 @@ namespace AA
 
 	public static class AAHelper
 	{
+		public static void DisposeSubject<TSubject>(ref Subject<TSubject> subject)
+		{
+			if (subject != null)
+			{
+				try
+				{
+					subject.OnCompleted();
+				}
+				finally
+				{
+					subject.Dispose();
+					subject = null;
+				}
+			}
+		}
+
 		public static void Destroy(UnityEngine.Object obj)
 		{
 			if (!obj) return;

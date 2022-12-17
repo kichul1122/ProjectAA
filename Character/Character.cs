@@ -5,8 +5,6 @@ namespace AA
 {
     public class Character : MonoBehaviour
     {
-        public CharacterModel Model;
-
         public int ObjectId;
 
         public Vector3 Position { get => _cachedTransform.position; set => _cachedTransform.position = value; }
@@ -20,15 +18,6 @@ namespace AA
         #endregion
 
         private CompositeDisposable _disposables;
-
-        public Character Construct(CharacterModel model)
-        {
-            Model = model;
-
-            Construct();
-
-            return this;
-        }
 
         public Character Construct()
         {

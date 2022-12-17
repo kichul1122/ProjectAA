@@ -6,16 +6,30 @@ namespace AA
     [System.Serializable]
     public class CharacterModels : IDisposable
     {
-        public ReactiveCollection<CharacterModel> Models = new ReactiveCollection<CharacterModel>();
+        public ReactiveCollection<CharacterModel> Models = new();
 
-        public void Add(CharacterModel characterData)
+        public void Add(CharacterModel model)
         {
-            Models.Add(characterData);
+            if (Models.Find(_ => _.Seq == model.Seq) == null) return;
+
+            Models.Add(model);
         }
 
-        public bool Remove(string seq)
+        public void Remove(string seq)
         {
-            return Models.RemoveAndDispose(_ => _.Seq == seq);
+            Remove(itemModel => itemModel.Seq == seq);
+        }
+
+        public void Remove(Predicate<CharacterModel> predicate)
+        {
+            for (int i = Models.Count - 1; i >= 0; i--)
+            {
+                if (predicate(Models[i]))
+                {
+                    Models[i].Dispose();
+                    Models.RemoveAt(i);
+                }
+            }
         }
 
         public CharacterModel Find(long characterId)
@@ -25,9 +39,11 @@ namespace AA
 
         public void Dispose()
         {
-            Models?.ForEach(data => data.Dispose());
-            Models?.Dispose();
-            Models?.Clear();
+            Models.ForEach(data => data.Dispose());
+            Models.Clear();
+            Models.Dispose();
+            Models = null;
+
         }
     }
 }

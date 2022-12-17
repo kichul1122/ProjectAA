@@ -14,12 +14,10 @@ namespace AA
         public long DefaultPlayerId = 1122;
 
         public StartUpSceneModel StartUp => Model.StartUpScene;
-
         public FieldSceneModel FieldScene => Model.FieldScene;
-
         public CharacterModels Character => Model.Character;
 
-        public Model Model = new Model();
+        public Model Model = new();
 
         public void OnDestroy()
         {
