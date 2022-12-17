@@ -12,7 +12,6 @@ namespace AA
         CreateUserData,
         LoadServerData,
         GamePlay,
-
     }
 
     public enum ESceneName
@@ -51,5 +50,30 @@ namespace AA
         Move,
         Attack,
         Jump,
+    }
+
+    public enum EStat
+    {
+        Attack,
+        AttackPercent,
+
+        MoveSpeed,
+        MoveSpeedPercent,
+
+        MaxHp,
+        MaxHpPercent,
+
+        CriticalPercent,
+        CriticalDamagePrercent,
+    }
+
+    public enum EStatAttribute
+    {
+        Attack,
+        MaxHp,
+        MoveSpeed,
+
+        CriticalPercent,
+        CriticalDamagePrercent,
     }
 }

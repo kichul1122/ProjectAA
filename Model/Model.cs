@@ -14,7 +14,5 @@ namespace AA
 			StartUpScene?.Dispose();
 			Character?.Dispose();
 		}
-
-
 	}
 }

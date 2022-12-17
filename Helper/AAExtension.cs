@@ -1,3 +1,4 @@
+using MessagePack;
 using ObservableCollections;
 using System;
 using System.Collections.Specialized;
@@ -23,27 +24,27 @@ namespace AA
 
 			return false;
 		}
-        
+
 		public static bool Remove<T>(this ReactiveCollection<T> collection, Predicate<T> predicate)
 		{
-            for (int i = collection.Count - 1; i >= 0; i--)
-            {
-                if (predicate(collection[i]))
-                {
+			for (int i = collection.Count - 1; i >= 0; i--)
+			{
+				if (predicate(collection[i]))
+				{
 					collection.RemoveAt(i);
-                    return true;
-                }
-            }
-			
+					return true;
+				}
+			}
+
 			return false;
 		}
-        
+
 		public static T Find<T>(this ReactiveCollection<T> collection, Predicate<T> predicate)
-        {
+		{
 			foreach (var element in collection)
 			{
-				if(predicate(element))
-                {
+				if (predicate(element))
+				{
 					return element;
 				}
 			}
@@ -52,15 +53,15 @@ namespace AA
 		}
 
 		public static void ForEach<T>(this ReactiveCollection<T> collection, Action<T> action)
-        {
+		{
 			if (collection == null) return;
 
-            foreach (var element in collection)
-            {
+			foreach (var element in collection)
+			{
 				action?.Invoke(element);
-            }
-        }
-        
+			}
+		}
+
 		public static IDisposable SubscribeToText(this IObservable<string> source, TMPro.TextMeshProUGUI text)
 		{
 			return source.SubscribeWithState(text, (x, t) => t.text = x);
@@ -70,9 +71,9 @@ namespace AA
 		{
 			return source.SubscribeWithState(text, (x, t) => t.text = x.ToString());
 		}
-        
+
 		public static IObservable<NotifyCollectionChangedAction> OnChangedAsObservable<T, TView>(this ISynchronizedView<T, TView> view)
-        {
+		{
 			return view.AsObservable().StartWith(NotifyCollectionChangedAction.Reset);
 		}
 
@@ -82,13 +83,14 @@ namespace AA
 		}
 
 		public static ISynchronizedView<T, Unit> CreateView<T>(this ObservableList<T> observableList, Component component)
-        {
+		{
 			return observableList.CreateView(_ => Unit.Default).AddTo(component);
 		}
 
 		public static string ToJson(this object @object)
 		{
-			return Newtonsoft.Json.JsonConvert.SerializeObject(@object);
+			return MessagePackSerializer.SerializeToJson(@object);
+			//return Newtonsoft.Json.JsonConvert.SerializeObject(@object);
 		}
 
 		public static T GetOrAddComponent<T>(this MonoBehaviour target) where T : MonoBehaviour

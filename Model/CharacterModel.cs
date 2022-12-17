@@ -12,6 +12,8 @@ namespace AA
 
 		public CharacterMetaData Meta;
 
+		public StatSystem StatSystem;
+
 		public string Seq => Server.Seq;
 
 		public void Dispose()
@@ -23,22 +25,8 @@ namespace AA
 		{
 			Server = server;
 			Meta = meta;
-			Client = new CharacterClientData();
+			Client = new();
+			StatSystem = new();
 		}
-
-		//private CharacterData() { }
-
-		//public class Factory : AAFactory<CharacterData>
-		//{
-		//    public static CharacterData Create(Server.Character server, Meta.Character meta)
-		//    {
-		//        CharacterData data = Create();
-		//        data.Server = server;
-		//        data.Meta = meta;
-		//        data.Client = new Client.Character();
-
-		//        return data;
-		//    }
-		//}
 	}
 }
