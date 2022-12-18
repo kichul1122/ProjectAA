@@ -22,11 +22,14 @@ namespace AA
 
 			_disposables = new CompositeDisposable();
 
-			characterModel.MergeTo(StatSystem);
-			characterModel.OnUpdateStatAsObservable().Subscribe(statModifier =>
+			if (characterModel != null)
 			{
-				StatSystem.Update(statModifier);
-			}).AddTo(_disposables);
+				characterModel.MergeTo(StatSystem);
+				characterModel.OnUpdateStatAsObservable().Subscribe(statModifier =>
+				{
+					StatSystem.Update(statModifier);
+				}).AddTo(_disposables);
+			}
 
 			itemModels.MergeTo(StatSystem);
 			itemModels.OnUpdateStatAsObservable().Subscribe(statModifier =>

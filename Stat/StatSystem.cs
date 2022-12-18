@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using System;
 using System.Collections.Generic;
 using UniRx;
@@ -66,6 +67,11 @@ namespace AA
 			{
 				Debug.Log($"EStat: {statModifier.Key} Value: {statModifier.Value.Value}");
 			}
+		}
+
+		public void MergeFrom(IEnumerable<StatModifier> statModifiers)
+		{
+			statModifiers.ForEach(statModifier => Update(statModifier));
 		}
 	}
 }

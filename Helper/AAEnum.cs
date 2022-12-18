@@ -9,8 +9,9 @@ namespace AA
         MetaVersion,
         LoadMeta,
         Login,
-        CreateUserData,
-        LoadServerData,
+        CreateNewModel,
+        LoadModelFromServer,
+        InitializeModel,
         GamePlay,
     }
 

@@ -10,7 +10,7 @@ namespace AA
 
 		public ItemModels Item = new();
 
-		public PlayerStatModel Stat;
+		public PlayerStatModel PlayerStat;
 
 		public void Dispose()
 		{
@@ -18,12 +18,12 @@ namespace AA
 			//FieldScene.Dispose();
 			Character.Dispose();
 			Item.Dispose();
-			Stat?.Dispose();
+			PlayerStat?.Dispose();
 		}
 
 		public void SetStatModel(PlayerStatModel statModel)
 		{
-			Stat = statModel;
+			PlayerStat = statModel;
 		}
 	}
 }

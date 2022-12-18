@@ -11,11 +11,11 @@ namespace AA
     /// </summary>
     public class ModelManager : ManagerMonobehaviour
     {
-        public long DefaultPlayerId = 1122;
-
         public StartUpSceneModel StartUp => Model.StartUpScene;
         public FieldSceneModel FieldScene => Model.FieldScene;
         public CharacterModels Character => Model.Character;
+
+        public PlayerStatModel PlayerStat => Model.PlayerStat;
 
         public Model Model = new();
 
@@ -46,9 +46,14 @@ namespace AA
             Console.WriteLine(binToJson);
         }
 
-        public void LoadStartUp()
+        public void Constructor()
         {
-            StartUp.Load();
+            var characterModel = Character.Find(AADefine.First.CharacterModelId);
+            PlayerStatModel playerStatModel = new PlayerStatModel(characterModel, Model.Item);
+
+            Model.SetStatModel(playerStatModel);
+
+
         }
     }
 }

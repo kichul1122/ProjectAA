@@ -10,7 +10,7 @@ namespace AA
 
         public void Add(CharacterModel model)
         {
-            if (Models.Find(_ => _.Seq == model.Seq) == null) return;
+            if (Models.Find(_ => _.Seq.Equals(model.Seq)) != null) return;
 
             Models.Add(model);
         }

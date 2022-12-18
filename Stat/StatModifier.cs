@@ -1,5 +1,8 @@
-﻿namespace AA
+﻿using MessagePack;
+
+namespace AA
 {
+	[MessagePackObject(true)]
 	[System.Serializable]
 	public struct StatModifier
 	{

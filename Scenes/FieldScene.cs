@@ -46,6 +46,7 @@ namespace AA
 
 		private async UniTask CreateMapAsync()
 		{
+
 			await Managers.Resource.InstantiateAsync(_fieldSceneModel.MapPrefabPath, this);
 		}
 
@@ -53,10 +54,13 @@ namespace AA
 
 		private async UniTask<Character> CreatePlayerAsync()
 		{
-			CharacterModel playerCharacterModel = Managers.Model.Character.Find(Managers.Model.DefaultPlayerId);
+			CharacterModel playerCharacterModel = Managers.Model.Character.Find(AADefine.First.CharacterModelId);
 
 			Character playerCharacter = await CharacterFactory.Default.CreateAsync(_fieldSceneModel.PlayerPrefabPath, playerCharacterModel, this);
 			Managers.Object.AddPlayer(playerCharacter);
+
+			var presenter = playerCharacter.GetOrAddComponent<PlayerCharacterPresenter>();
+			presenter.Constructor(Managers.Model.PlayerStat.StatSystem);
 
 			_characterFollwPublisher.Publish(new CharacterFollow.TargetTransformMsg(playerCharacter.CachedTransform));
 

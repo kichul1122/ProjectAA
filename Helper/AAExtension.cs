@@ -1,4 +1,3 @@
-using MessagePack;
 using ObservableCollections;
 using System;
 using System.Collections.Specialized;
@@ -89,8 +88,8 @@ namespace AA
 
 		public static string ToJson(this object @object)
 		{
-			return MessagePackSerializer.SerializeToJson(@object);
-			//return Newtonsoft.Json.JsonConvert.SerializeObject(@object);
+			//return MessagePackSerializer.SerializeToJson(@object);
+			return Newtonsoft.Json.JsonConvert.SerializeObject(@object);
 		}
 
 		public static T GetOrAddComponent<T>(this MonoBehaviour target) where T : MonoBehaviour

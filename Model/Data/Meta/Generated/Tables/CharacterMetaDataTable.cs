@@ -89,6 +89,7 @@ namespace AA.Tables
                 new MasterMemory.Meta.MetaProperty[]
                 {
                     new MasterMemory.Meta.MetaProperty(typeof(CharacterMetaData).GetProperty("CharacterId")),
+                    new MasterMemory.Meta.MetaProperty(typeof(CharacterMetaData).GetProperty("StatModifiers")),
                 },
                 new MasterMemory.Meta.MetaIndex[]{
                     new MasterMemory.Meta.MetaIndex(new System.Reflection.PropertyInfo[] {

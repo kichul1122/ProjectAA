@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sirenix.OdinInspector;
+using System;
 
 
 namespace AA
@@ -34,6 +35,14 @@ namespace AA
 		{
 			Server = server;
 			Meta = meta;
+
+			MergeFrom();
+		}
+
+		[Button]
+		public void MergeFrom()
+		{
+			StatSystem.MergeFrom(Meta.StatModifiers);
 		}
 	}
 }

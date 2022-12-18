@@ -109,24 +109,30 @@ namespace AA
 
 			if (isFristLogin)
 			{
-				_startUpModel.ChangeState(EStartUpSceneState.CreateUserData);
+				_startUpModel.ChangeState(EStartUpSceneState.CreateNewModel);
 			}
 			else
 			{
-				_startUpModel.ChangeState(EStartUpSceneState.LoadServerData);
+				_startUpModel.ChangeState(EStartUpSceneState.LoadModelFromServer);
 			}
 		});
 
-		IEnumerator CreateUserData_Enter() => UniTask.ToCoroutine(async () =>
+		IEnumerator LoadModelFromServer_Enter() => UniTask.ToCoroutine(async () =>
 		{
 			await UniTask.Yield();
 
-			_startUpModel.ChangeState(EStartUpSceneState.LoadServerData);
+			_startUpModel.ChangeState(EStartUpSceneState.GamePlay);
 		});
 
-		IEnumerator LoadServerData_Enter() => UniTask.ToCoroutine(async () =>
+		IEnumerator CreateNewModel_Enter() => UniTask.ToCoroutine(async () =>
 		{
 			await UniTask.Yield();
+
+			var characterMD = Managers.Meta.Character.FindByCharacterId(AADefine.First.CharacterModelId);
+			var characterSD = new CharacterServerData() { Id = AADefine.First.CharacterModelId };
+			var characterModel = new CharacterModel(characterSD, characterMD);
+			Managers.Model.Character.Add(characterModel);
+			Managers.Model.Constructor();
 
 			_startUpModel.ChangeState(EStartUpSceneState.GamePlay);
 		});
