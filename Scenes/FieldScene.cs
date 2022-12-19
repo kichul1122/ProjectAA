@@ -75,7 +75,7 @@ namespace AA
 			CharacterPool enemyPool = new CharacterPool(_fieldSceneModel.EnemyPrefabPath, this);
 
 			var enemySpawnerSetting = new EnemyPoolSpawner.Setting() { spawnInterval = 1d };
-			enemyPoolSpawner.Construct(enemyPool, enemySpawnerSetting, Managers.Object);
+			enemyPoolSpawner.Construct(enemyPool, enemySpawnerSetting);
 		}
 
 		//private void TestIntervalDieEnemies()

@@ -1,3 +1,4 @@
+using UniRx;
 using UnityEngine;
 
 namespace AA
@@ -6,20 +7,24 @@ namespace AA
     {
         private CharacterPool pool;
         private Setting setting;
-        private ObjectManager objectManager;
 
-        public void Construct(CharacterPool pool, Setting setting, ObjectManager objectManager)
+        public void Construct(CharacterPool pool, Setting setting)
         {
             this.pool = pool;
             this.setting = setting;
-            this.objectManager = objectManager;
 
-            //Interval Spawn Enemy
+            StartSpawn();
+        }
+
+        private void StartSpawn()
+        {
             //Observable.Interval(TimeSpan.FromSeconds(setting.spawnInterval)).Subscribe(_ =>
             //{
-            //    Character newCharacter = pool.Spawn();
-            //    newCharacter.Construct().SetParent(transform);
-            //    objectManager.AddEnemy(newCharacter);
+            Character newCharacter = pool.Spawn();
+            newCharacter.Observable.OnRemoveAsObservable().Take(1).Subscribe(character => pool.Despawn(character)).AddTo(this);
+
+            newCharacter.Construct().SetParent(transform);
+            Managers.Object.AddEnemy(newCharacter);
 
             //}).AddTo(this);
         }

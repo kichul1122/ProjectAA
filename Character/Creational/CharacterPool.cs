@@ -1,4 +1,3 @@
-using UniRx;
 using UnityEngine;
 
 namespace AA
@@ -16,8 +15,6 @@ namespace AA
 		protected override Character CreateInstance()
 		{
 			Character newCharacter = base.CreateInstance();
-
-			newCharacter.Observable.OnDieAsObservable().Subscribe(_ => Despawn(_));
 
 			return newCharacter;
 		}

@@ -39,14 +39,21 @@ namespace AA
             Observable.OnDieAsObserver().OnNext(this);
         }
 
+        public void OnRemove()
+        {
+            Observable.OnRemoveAsObserver().OnNext(this);
+        }
+
         public void ChangeMaterial(Material material)
         {
             _renderer.sharedMaterial = material;
         }
 
-        public void SetParent(Transform parentTransform)
+        public Character SetParent(Transform parentTransform)
         {
             _cachedTransform.SetParent(parentTransform);
+
+            return this;
         }
     }
 }
