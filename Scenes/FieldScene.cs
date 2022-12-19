@@ -33,9 +33,15 @@ namespace AA
 
 			await CreateMapAsync();
 
+			await UniTask.Yield();
+
 			SpawnEnemies();
 
+			await UniTask.Yield();
+
 			await CreatePlayerAsync();
+
+			await UniTask.Yield();
 
 			await Managers.Fade.FadeInAsync();
 
