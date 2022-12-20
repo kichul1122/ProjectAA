@@ -1,6 +1,4 @@
-using ObservableCollections;
 using System;
-using System.Collections.Specialized;
 using UniRx;
 using UnityEngine;
 
@@ -69,21 +67,6 @@ namespace AA
 		public static IDisposable SubscribeToText<T>(this IObservable<T> source, TMPro.TextMeshProUGUI text)
 		{
 			return source.SubscribeWithState(text, (x, t) => t.text = x.ToString());
-		}
-
-		public static IObservable<NotifyCollectionChangedAction> OnChangedAsObservable<T, TView>(this ISynchronizedView<T, TView> view)
-		{
-			return view.AsObservable().StartWith(NotifyCollectionChangedAction.Reset);
-		}
-
-		public static IObservable<NotifyCollectionChangedAction> AsObservable<T, TView>(this ISynchronizedView<T, TView> view)
-		{
-			return Observable.FromEvent<Action<NotifyCollectionChangedAction>, NotifyCollectionChangedAction>(h => h, h => view.CollectionStateChanged += h, h => view.CollectionStateChanged -= h);
-		}
-
-		public static ISynchronizedView<T, Unit> CreateView<T>(this ObservableList<T> observableList, Component component)
-		{
-			return observableList.CreateView(_ => Unit.Default).AddTo(component);
 		}
 
 		public static string ToJson(this object @object)

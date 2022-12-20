@@ -1,5 +1,4 @@
-﻿//using AA.Resolvers;
-using MessagePack;
+﻿using MessagePack;
 using MessagePack.Resolvers;
 using UnityEngine;
 
@@ -7,7 +6,7 @@ namespace AA
 {
     public static class Initializer
     {
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        //[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         public static void SetupManagers()
         {
             Managers.DoReset();
@@ -15,7 +14,7 @@ namespace AA
             Debug.Log(nameof(SetupManagers));
         }
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        //[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         public static void SetupMessagePackResolver()
         {
             StaticCompositeResolver.Instance = new StaticCompositeResolver();

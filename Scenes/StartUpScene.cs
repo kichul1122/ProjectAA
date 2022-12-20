@@ -28,6 +28,12 @@ namespace AA
 
 		#endregion Interface
 
+		private void Awake()
+		{
+			Initializer.SetupManagers();
+			Initializer.SetupMessagePackResolver();
+		}
+
 		private void Start()
 		{
 			SetUpAsync().Forget();
