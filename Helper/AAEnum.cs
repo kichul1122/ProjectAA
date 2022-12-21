@@ -53,6 +53,16 @@ namespace AA
         Jump,
     }
 
+    public enum EStatAttribute
+    {
+        Attack,
+        MaxHp,
+        MoveSpeed,
+
+        CriticalPercent,
+        CriticalDamagePrercent,
+    }
+
     public enum EStat
     {
         Attack,
@@ -63,16 +73,6 @@ namespace AA
 
         MaxHp,
         MaxHpPercent,
-
-        CriticalPercent,
-        CriticalDamagePrercent,
-    }
-
-    public enum EStatAttribute
-    {
-        Attack,
-        MaxHp,
-        MoveSpeed,
 
         CriticalPercent,
         CriticalDamagePrercent,

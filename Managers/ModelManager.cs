@@ -52,8 +52,6 @@ namespace AA
             PlayerStatModel playerStatModel = new PlayerStatModel(characterModel, Model.Item);
 
             Model.SetStatModel(playerStatModel);
-
-
         }
     }
 }

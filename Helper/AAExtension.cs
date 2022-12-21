@@ -71,7 +71,6 @@ namespace AA
 
 		public static string ToJson(this object @object)
 		{
-			//return MessagePackSerializer.SerializeToJson(@object);
 			return Newtonsoft.Json.JsonConvert.SerializeObject(@object);
 		}
 
