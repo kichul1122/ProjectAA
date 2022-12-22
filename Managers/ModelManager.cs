@@ -1,6 +1,7 @@
 using MessagePack;
 using Sirenix.OdinInspector;
 using System;
+using UnityEngine;
 
 namespace AA
 {
@@ -52,6 +53,12 @@ namespace AA
             PlayerStatModel playerStatModel = new PlayerStatModel(characterModel, Model.Item);
 
             Model.SetStatModel(playerStatModel);
+        }
+
+        [Button]
+        public void ToJson()
+        {
+            Debug.Log(Model.ToJson());
         }
     }
 }

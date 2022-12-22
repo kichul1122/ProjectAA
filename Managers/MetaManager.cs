@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System.Threading;
+using UnityEngine;
 
 namespace AA
 {
@@ -47,6 +48,12 @@ namespace AA
             {
                 new CharacterMetaData(AADefine.First.CharacterModelId, new List<StatModifier>() { new StatModifier(EStat.MoveSpeed, 16d)}),
             });
+        }
+
+        [Button]
+        public void ToJson()
+        {
+            Debug.Log(DB.ToJson());
         }
     }
 }

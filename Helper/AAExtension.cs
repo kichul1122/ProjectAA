@@ -1,4 +1,6 @@
+using Sirenix.Serialization;
 using System;
+using System.Text;
 using UniRx;
 using UnityEngine;
 
@@ -71,7 +73,8 @@ namespace AA
 
 		public static string ToJson(this object @object)
 		{
-			return Newtonsoft.Json.JsonConvert.SerializeObject(@object);
+			return Encoding.Default.GetString(SerializationUtility.SerializeValue(@object, DataFormat.JSON));
+			//return JsonConvert.SerializeObject(@object);
 		}
 
 		public static T GetOrAddComponent<T>(this MonoBehaviour target) where T : MonoBehaviour
