@@ -132,7 +132,7 @@ namespace AA
 			var characterSD = new CharacterServerData() { Id = AADefine.First.CharacterModelId };
 			var characterModel = new CharacterModel(characterSD, characterMD);
 			Managers.Model.Character.Add(characterModel);
-			Managers.Model.Constructor();
+			Managers.Model.Construct();
 
 			_startUpModel.ChangeState(EStartUpSceneState.GamePlay);
 		});

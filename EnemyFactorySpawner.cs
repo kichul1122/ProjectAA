@@ -11,7 +11,7 @@ namespace AA
 
 		public Character[] CharacterPrefabs;
 
-		public void Constructor(CharacterFactory factory, Setting setting)
+		public void Construct(CharacterFactory factory, Setting setting)
 		{
 			this.factory = factory;
 			this.setting = setting;

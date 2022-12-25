@@ -12,7 +12,7 @@ namespace AA
 
 		public Character[] CharacterPrefabs;
 
-		public void Constructor(CharacterPool pool, Setting setting)
+		public void Construct(CharacterPool pool, Setting setting)
 		{
 			this.pool = pool;
 			this.setting = setting;

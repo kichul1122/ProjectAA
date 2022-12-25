@@ -13,7 +13,7 @@ namespace AA
         {
             enemies.Add(newCharacter);
 
-            newCharacter.Observable.OnRemoveAsObservable().Take(1).Subscribe(_ => enemies.Remove(_)).AddTo(this);
+            newCharacter.Observable.OnRemoveObservable().Subscribe(_ => enemies.Remove(_)).AddTo(this);
         }
     }
 }

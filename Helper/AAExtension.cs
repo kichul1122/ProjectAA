@@ -8,36 +8,6 @@ namespace AA
 {
 	public static class Extension
 	{
-		public static bool RemoveAndDispose<T>(this ReactiveCollection<T> collection, Predicate<T> predicate)
-		{
-			for (int i = collection.Count - 1; i >= 0; i--)
-			{
-				if (predicate(collection[i]))
-				{
-					(collection[i] as IDisposable)?.Dispose();
-
-					collection.RemoveAt(i);
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		public static bool Remove<T>(this ReactiveCollection<T> collection, Predicate<T> predicate)
-		{
-			for (int i = collection.Count - 1; i >= 0; i--)
-			{
-				if (predicate(collection[i]))
-				{
-					collection.RemoveAt(i);
-					return true;
-				}
-			}
-
-			return false;
-		}
-
 		public static T Find<T>(this ReactiveCollection<T> collection, Predicate<T> predicate)
 		{
 			foreach (var element in collection)
@@ -48,7 +18,7 @@ namespace AA
 				}
 			}
 
-			return default;
+			return default(T);
 		}
 
 		public static void ForEach<T>(this ReactiveCollection<T> collection, Action<T> action)

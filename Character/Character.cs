@@ -36,12 +36,12 @@ namespace AA
 
         public void Die()
         {
-            Observable.OnDieAsObserver().OnNext(this);
+            Observable.OnDieObserver().OnNext(this);
         }
 
         public void OnRemove()
         {
-            Observable.OnRemoveAsObserver().OnNext(this);
+            Observable.OnRemoveObserver().OnNext(this);
         }
 
         public void ChangeMaterial(Material material)
@@ -52,6 +52,13 @@ namespace AA
         public Character SetParent(Transform parentTransform)
         {
             _cachedTransform.SetParent(parentTransform);
+
+            return this;
+        }
+
+        public Character Teleport(Vector3 spawnPosition)
+        {
+            Position = spawnPosition;
 
             return this;
         }

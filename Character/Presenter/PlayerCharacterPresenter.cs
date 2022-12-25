@@ -8,7 +8,7 @@ namespace AA
     {
         private StatSystem _statSystem;
 
-        public void Constructor(StatSystem statSystem)
+        public void Construct(StatSystem statSystem)
         {
             _statSystem = statSystem;
 

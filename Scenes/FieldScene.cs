@@ -66,7 +66,7 @@ namespace AA
 			Managers.Object.AddPlayer(playerCharacter);
 
 			var presenter = playerCharacter.GetOrAddComponent<PlayerCharacterPresenter>();
-			presenter.Constructor(Managers.Model.PlayerStat.StatSystem);
+			presenter.Construct(Managers.Model.PlayerStat.StatSystem);
 
 			_characterFollwPublisher.Publish(new CharacterFollow.TargetTransformMsg(playerCharacter.CachedTransform));
 
@@ -78,10 +78,20 @@ namespace AA
 			EnemyPoolSpawner enemyPoolSpawner = new GameObject().AddComponent<EnemyPoolSpawner>();
 			enemyPoolSpawner.gameObject.name = nameof(EnemyPoolSpawner);
 
-			CharacterPool enemyPool = new CharacterPool(_fieldSceneModel.EnemyPrefabPath, this);
+			CharacterPool enemy01Pool = new CharacterPool(_fieldSceneModel.Enemy01PrefabPath, this);
+			var enemy01SpawnerSetting = new EnemyPoolSpawner.Setting() { spawnInterval = 1d, spawnPosition = new Vector3(3f, 0f, 3f) };
 
-			var enemySpawnerSetting = new EnemyPoolSpawner.Setting() { spawnInterval = 1d };
-			enemyPoolSpawner.Construct(enemyPool, enemySpawnerSetting);
+			enemyPoolSpawner.AddPool(enemy01Pool, enemy01SpawnerSetting);
+
+			CharacterPool enemy02Pool = new CharacterPool(_fieldSceneModel.Enemy02PrefabPath, this);
+			var enemy02SpawnerSetting = new EnemyPoolSpawner.Setting() { spawnInterval = 1d, spawnPosition = new Vector3(0f, 0f, 3f) };
+
+			enemyPoolSpawner.AddPool(enemy02Pool, enemy02SpawnerSetting);
+
+			CharacterPool enemy03Pool = new CharacterPool(_fieldSceneModel.Enemy03PrefabPath, this);
+			var enemy03SpawnerSetting = new EnemyPoolSpawner.Setting() { spawnInterval = 1d, spawnPosition = new Vector3(-3f, 0f, 3f) };
+
+			enemyPoolSpawner.AddPool(enemy03Pool, enemy03SpawnerSetting);
 		}
 
 		//private void TestIntervalDieEnemies()

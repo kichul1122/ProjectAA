@@ -47,7 +47,7 @@ namespace AA
             Console.WriteLine(binToJson);
         }
 
-        public void Constructor()
+        public void Construct()
         {
             var characterModel = Character.Find(AADefine.First.CharacterModelId);
             PlayerStatModel playerStatModel = new PlayerStatModel(characterModel, Model.Item);
