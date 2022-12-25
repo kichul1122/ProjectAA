@@ -5,60 +5,21 @@ namespace AA
 {
 	public class AAPool<T> : ObjectPool<T> where T : Component
 	{
-		private readonly GameObject _prefab;
+		private readonly T _prefab;
 
 		public AAPool(string prefabPath, Component parent)
 		{
-			_prefab = Managers.Resource.LoadPrefab(prefabPath, parent);
+			_prefab = Managers.Resource.LoadAsset<T>(prefabPath, parent);
 		}
 
-		public AAPool(GameObject prefab)
+		public AAPool(T prefab)
 		{
 			_prefab = prefab;
 		}
-		//protected abstract T CreateInstance();
 
 		protected override T CreateInstance()
 		{
-			GameObject newGO = Managers.Resource.Instantiate(_prefab);
-
-			return newGO.GetComponent<T>();
+			return Managers.Resource.Instantiate(_prefab);
 		}
-
-		//protected override void OnBeforeRent(T instance)
-		//{
-		//	base.OnBeforeRent(instance);
-		//}
-
-		//protected override void OnBeforeReturn(T instance)
-		//{
-		//	base.OnBeforeReturn(instance);
-		//}
 	}
-
-	/// <summary>
-	/// Prefab To GameObject Pool
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	//public class AAAddressablesPool<T> : ObjectPool<T> where T : Component
-	//{
-	//	private readonly GameObject _prefab;
-
-	//	public AAAddressablesPool(GameObject prefab)
-	//	{
-	//		_prefab = prefab;
-	//	}
-
-	//	protected override T CreateInstance()
-	//	{
-	//		GameObject newGO = Managers.Resource.Instantiate(_prefab);
-
-	//		return newGO.GetComponent<T>();
-	//	}
-
-	//	protected override void Dispose(bool disposing)
-	//	{
-	//		base.Dispose(disposing);
-	//	}
-	//}
 }

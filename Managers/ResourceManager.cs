@@ -116,86 +116,10 @@ namespace AA
 			return Object.Instantiate(prefab);
 		}
 
-		public async UniTask<GameObject> InstantiateAsync(string prefabPath, Component owner)
-		{
-			var prefab = await Managers.Resource.LoadPrefabAsync(prefabPath, owner);
-
-			return Object.Instantiate(prefab);
-		}
-		//var characterPrefabGO = await Managers.Resource.LoadPrefabAsync(prefabPath, owner);
-
-		//var newCharacterGO = Managers.Resource.Instantiate(characterPrefabGO);
-
-		public GameObject LoadPrefab(string path, Component owner)
-		{
-			var handle = Addressables.LoadAssetAsync<GameObject>(path);
-
-			var prefab = handle.WaitForCompletion();
-
-			if (prefab == null)
-			{
-				Debug.LogError($"LoadPrefab : {path} is null");
-				return null;
-			}
-
-			owner.OnDestroyAsObservable().Subscribe(_ => Release(handle));
-
-			return prefab;
-		}
-
-		public async UniTask<GameObject> LoadPrefabAsync(string path, Component owner)
-		{
-			var handle = Addressables.LoadAssetAsync<GameObject>(path);
-
-			var prefab = await handle;
-
-			if (prefab == null)
-			{
-				Debug.LogError($"LoadPrefabAsync : {path} is null");
-				return null;
-			}
-
-			owner.OnDestroyAsObservable().Subscribe(_ => Release(handle));
-
-			return prefab;
-		}
-
-		public T LoadPrefab<T>(string path, Component owner) where T : UnityEngine.Component
-		{
-			var handle = Addressables.LoadAssetAsync<GameObject>(path);
-			var prefab = handle.WaitForCompletion();
-
-			if (prefab == null)
-			{
-				Debug.LogError($"LoadPrefab<T> : {path} is null");
-				return null;
-			}
-
-			owner.OnDestroyAsObservable().Subscribe(_ => Release(handle));
-
-			return prefab.GetComponent<T>();
-		}
-
-		public async UniTask<T> LoadPrefabAsync<T>(string path, Component owner) where T : UnityEngine.Component
-		{
-			var handle = Addressables.LoadAssetAsync<GameObject>(path);
-
-			var prefab = await handle;
-
-			if (prefab == null)
-			{
-				Debug.LogError($"LoadPrefab<T> : {path} is null");
-				return null;
-			}
-
-			owner.OnDestroyAsObservable().Subscribe(_ => Release(handle));
-
-			return prefab.GetComponent<T>();
-		}
-
 		public T LoadAsset<T>(string path, Component owner) where T : UnityEngine.Object
 		{
 			var handle = Addressables.LoadAssetAsync<T>(path);
+
 			var asset = handle.WaitForCompletion();
 
 			if (asset == null)
@@ -225,11 +149,6 @@ namespace AA
 
 			return asset;
 		}
-
-		//public void Release<T>(AsyncOperationHandle<T> handle)
-		//{
-		//	Addressables.Release(handle);
-		//}
 
 		private void Release<T>(AsyncOperationHandle<T> handle)
 		{

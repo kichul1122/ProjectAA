@@ -52,8 +52,9 @@ namespace AA
 
 		private async UniTask CreateMapAsync()
 		{
+			var mapPrefab = await Managers.Resource.LoadAssetAsync<GameObject>(_fieldSceneModel.MapPrefabPath, this);
 
-			await Managers.Resource.InstantiateAsync(_fieldSceneModel.MapPrefabPath, this);
+			Managers.Resource.Instantiate(mapPrefab);
 		}
 
 		//CharacterSetting Component 에서 가져오자
@@ -62,7 +63,10 @@ namespace AA
 		{
 			CharacterModel playerCharacterModel = Managers.Model.Character.Find(AADefine.First.CharacterModelId);
 
-			Character playerCharacter = await CharacterFactory.Default.CreateAsync(_fieldSceneModel.PlayerPrefabPath, playerCharacterModel, this);
+			Character playerPrefab = await Managers.Resource.LoadAssetAsync<Character>(_fieldSceneModel.PlayerPrefabPath, this);
+
+			Character playerCharacter = Managers.Resource.Instantiate(playerPrefab);
+
 			Managers.Object.AddPlayer(playerCharacter);
 
 			var presenter = playerCharacter.GetOrAddComponent<PlayerCharacterPresenter>();
@@ -78,17 +82,17 @@ namespace AA
 			EnemyPoolSpawner enemyPoolSpawner = new GameObject().AddComponent<EnemyPoolSpawner>();
 			enemyPoolSpawner.gameObject.name = nameof(EnemyPoolSpawner);
 
-			CharacterPool enemy01Pool = new CharacterPool(_fieldSceneModel.Enemy01PrefabPath, this);
+			AAPool<Character> enemy01Pool = new AAPool<Character>(_fieldSceneModel.Enemy01PrefabPath, this);
 			var enemy01SpawnerSetting = new EnemyPoolSpawner.Setting() { spawnInterval = 1d, spawnPosition = new Vector3(3f, 0f, 3f) };
 
 			enemyPoolSpawner.AddPool(enemy01Pool, enemy01SpawnerSetting);
 
-			CharacterPool enemy02Pool = new CharacterPool(_fieldSceneModel.Enemy02PrefabPath, this);
+			AAPool<Character> enemy02Pool = new AAPool<Character>(_fieldSceneModel.Enemy02PrefabPath, this);
 			var enemy02SpawnerSetting = new EnemyPoolSpawner.Setting() { spawnInterval = 1d, spawnPosition = new Vector3(0f, 0f, 3f) };
 
 			enemyPoolSpawner.AddPool(enemy02Pool, enemy02SpawnerSetting);
 
-			CharacterPool enemy03Pool = new CharacterPool(_fieldSceneModel.Enemy03PrefabPath, this);
+			AAPool<Character> enemy03Pool = new AAPool<Character>(_fieldSceneModel.Enemy03PrefabPath, this);
 			var enemy03SpawnerSetting = new EnemyPoolSpawner.Setting() { spawnInterval = 1d, spawnPosition = new Vector3(-3f, 0f, 3f) };
 
 			enemyPoolSpawner.AddPool(enemy03Pool, enemy03SpawnerSetting);

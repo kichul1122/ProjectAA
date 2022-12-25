@@ -8,17 +8,17 @@ namespace AA
         //private CharacterPool pool;
         //private Setting setting;
 
-        public void AddPool(CharacterPool pool, Setting setting)
+        public void AddPool(AAPool<Character> pool, Setting setting)
         {
             StartSpawn(pool, setting);
         }
 
-        private void StartSpawn(CharacterPool pool, Setting setting)
+        private void StartSpawn(AAPool<Character> pool, Setting setting)
         {
             //Observable.Interval(TimeSpan.FromSeconds(setting.spawnInterval)).Subscribe(_ =>
             //{
-            Character newCharacter = pool.Spawn();
-            newCharacter.Observable.OnRemoveObservable().Subscribe(character => pool.Despawn(character)).AddTo(this);
+            Character newCharacter = pool.Rent();
+            newCharacter.Observable.OnRemoveObservable().Subscribe(character => pool.Return(character)).AddTo(this);
 
             newCharacter.Construct().SetParent(transform).Teleport(setting.spawnPosition);
 
