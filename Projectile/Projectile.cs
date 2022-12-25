@@ -12,14 +12,21 @@ namespace AA
 		private System.Action<Projectile> _onReturn;
 
 		private Rigidbody _rigidbody;
-		private Setting _setting = new();
+		public Setting _setting = new();
+
+		private Transform CachedTransform;
+
+		private Transform _projectileForwardTransform;
+
+		private float _elapsedLifeTime;
 
 		private void Awake()
 		{
-			//this.FixedUpdateAsObservable().Subscribe(_ =>
-			//{
-			//	//Move(Time.fixedDeltaTime);
-			//}).AddTo(this);
+			this.FixedUpdateAsObservable().Subscribe(_ =>
+			{
+				Move(Time.fixedDeltaTime);
+				UpdateLifeTime();
+			}).AddTo(this);
 
 			this.OnCollisionEnterAsObservable().Subscribe(collision =>
 			{
@@ -33,12 +40,41 @@ namespace AA
 			}).AddTo(this);
 
 			_rigidbody = GetComponent<Rigidbody>();
+			CachedTransform = transform;
+
+			this.UpdateAsObservable().Subscribe(_ =>
+			{
+
+			}).AddTo(this);
 		}
 
-		public Projectile Construct(System.Action<Projectile> onReturn, Setting setting)
+		private void Move(float fixedDeltaTime)
+		{
+			CachedTransform.position += _setting.MoveSpeed * fixedDeltaTime * CachedTransform.forward;
+		}
+
+		private void UpdateLifeTime()
+		{
+			_elapsedLifeTime += Time.fixedDeltaTime;
+
+			if (_elapsedLifeTime >= _setting.LifeTime)
+			{
+				_elapsedLifeTime = 0f;
+
+				OnReturn();
+			}
+		}
+
+		public Projectile Construct(System.Action<Projectile> onReturn, Setting setting = default)
 		{
 			_onReturn = onReturn;
-			_setting = setting;
+
+			if (setting != default)
+			{
+				_setting = setting;
+			}
+
+			_elapsedLifeTime = 0f;
 
 			return this;
 		}
@@ -48,9 +84,23 @@ namespace AA
 			_onReturn?.Invoke(this);
 		}
 
-		public Projectile SetVelocity(Vector3 velocity)
+		public Projectile SetPosition(Vector3 position)
 		{
-			_rigidbody.velocity = velocity * _setting.MoveSpeed;
+			CachedTransform.position = position;
+
+			return this;
+		}
+
+		public Projectile SetForward(Vector3 forward)
+		{
+			CachedTransform.forward = forward;
+
+			return this;
+		}
+
+		public Projectile SetParent(Transform projectileParent)
+		{
+			CachedTransform.SetParent(projectileParent);
 
 			return this;
 		}
@@ -58,6 +108,7 @@ namespace AA
 		[Serializable]
 		public class Setting
 		{
+			public float LifeTime = 3f;
 			public float MoveSpeed = 1f;
 			public ECharacter OwnerECharacter = ECharacter.None;
 		}

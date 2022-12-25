@@ -1,3 +1,5 @@
+using System;
+using UniRx;
 using UnityEngine;
 
 namespace AA
@@ -11,15 +13,33 @@ namespace AA
         private void Awake()
         {
             _weaponPivot = GetComponentInChildren<WeaponPivot>();
+
+            Observable.Interval(TimeSpan.FromSeconds(0.2d)).Subscribe(_ =>
+            {
+                //Character newCharacter = pool.Rent();
+                //newCharacter.Observable.OnRemoveObservable().Subscribe(character => pool.Return(character)).AddTo(this);
+
+                //newCharacter.Construct().SetParent(transform).Teleport(setting.spawnPosition);
+
+                //Managers.Object.AddEnemy(newCharacter);
+
+                Launch();
+
+
+            }).AddTo(this);
         }
 
-        public void Equip(Weapon weapon)
+        public CharacterWeapon Equip(Weapon weapon)
         {
             UnEquip();
 
             _equppiedWeapon = weapon;
 
+            weapon.transform.SetParent(_weaponPivot.transform, false);
+
             weapon.Equip();
+
+            return this;
         }
 
         private void UnEquip()
@@ -32,8 +52,10 @@ namespace AA
             _equppiedWeapon = null;
         }
 
-        public void launch()
+        public void Launch()
         {
+            if (!_equppiedWeapon) return;
+
             _equppiedWeapon.Launch();
         }
 

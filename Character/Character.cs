@@ -17,11 +17,15 @@ namespace AA
 
         public ECharacter ECharacter = ECharacter.None;
 
+        public CharacterRotator Rotator;
+
         public Character Construct()
         {
             ObjectId = GetInstanceID();
             _cachedTransform = transform;
             _renderer = GetComponentInChildren<Renderer>();
+
+            Rotator = GetComponentInChildren<CharacterRotator>();
 
             return this;
         }
@@ -58,6 +62,14 @@ namespace AA
             Position = spawnPosition;
 
             return this;
+        }
+
+        public void Equip(Weapon weapon)
+        {
+            var characterWeapon = GetComponent<CharacterWeapon>();
+            if (!characterWeapon) return;
+
+            characterWeapon.Equip(weapon);
         }
     }
 }

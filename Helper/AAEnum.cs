@@ -34,6 +34,8 @@ namespace AA
         Sprite,
         Default,
         Atlas,
+        Weapon,
+        Projectile,
     }
 
     public enum ECharacter

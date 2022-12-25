@@ -66,16 +66,45 @@ namespace AA
 			Character playerPrefab = await Managers.Resource.LoadPrefabAsync<Character>(_fieldSceneModel.PlayerPrefabPath, this);
 
 			Character playerCharacter = Managers.Resource.Instantiate(playerPrefab);
+			playerCharacter.Construct();
 
 			Managers.Object.AddPlayer(playerCharacter);
 
 			var presenter = playerCharacter.GetOrAddComponent<PlayerCharacterPresenter>();
 			presenter.Construct(Managers.Model.PlayerStat.StatSystem);
 
+			Weapon playerWeapon = await CreateWeaponAsync();
+			playerWeapon.SetProjectileForward(playerCharacter.Rotator.CachedTransform);
+
+			playerCharacter.Equip(playerWeapon);
+
 			_characterFollwPublisher.Publish(new CharacterFollow.TargetTransformMsg(playerCharacter.CachedTransform));
 
 			return playerCharacter;
 		}
+
+		private async UniTask<Weapon> CreateWeaponAsync()
+		{
+			Weapon weaponPrefab = await Managers.Resource.LoadPrefabAsync<Weapon>(_fieldSceneModel.PlayerWeaponPrefabPath, this);
+
+			AAPool<Projectile> projectilePool = new AAPool<Projectile>(_fieldSceneModel.PlayerProjectilePrefabPath, this);
+
+			Transform projectileParent = new GameObject() { name = "ProjectileParent" }.transform;
+
+			Weapon weapon = Managers.Resource.Instantiate(weaponPrefab);
+			weapon.Construct(projectilePool, projectileParent);
+
+			return weapon;
+		}
+
+		//private async UniTask<Projectile> CreateProjectileAsync()
+		//{
+		//	Projectile projectilePrefab = await Managers.Resource.LoadPrefabAsync<Projectile>(_fieldSceneModel.PlayerProjectilePrefabPath, this);
+
+		//	Projectile projectile = Managers.Resource.Instantiate(projectilePrefab);
+
+		//	return projectile;
+		//}
 
 		private void SpawnEnemies()
 		{
