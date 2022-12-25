@@ -52,7 +52,7 @@ namespace AA
 
 		private async UniTask CreateMapAsync()
 		{
-			var mapPrefab = await Managers.Resource.LoadAssetAsync<GameObject>(_fieldSceneModel.MapPrefabPath, this);
+			var mapPrefab = await Managers.Resource.LoadPrefabAsync(_fieldSceneModel.MapPrefabPath, this);
 
 			Managers.Resource.Instantiate(mapPrefab);
 		}
@@ -61,9 +61,9 @@ namespace AA
 
 		private async UniTask<Character> CreatePlayerAsync()
 		{
-			CharacterModel playerCharacterModel = Managers.Model.Character.Find(AADefine.First.CharacterModelId);
+			//CharacterModel playerCharacterModel = Managers.Model.Character.Find(AADefine.First.CharacterModelId);
 
-			Character playerPrefab = await Managers.Resource.LoadAssetAsync<Character>(_fieldSceneModel.PlayerPrefabPath, this);
+			Character playerPrefab = await Managers.Resource.LoadPrefabAsync<Character>(_fieldSceneModel.PlayerPrefabPath, this);
 
 			Character playerCharacter = Managers.Resource.Instantiate(playerPrefab);
 

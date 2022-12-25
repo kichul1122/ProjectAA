@@ -116,6 +116,40 @@ namespace AA
 			return Object.Instantiate(prefab);
 		}
 
+		public GameObject LoadPrefab(string path, Component owner)
+		{
+			var handle = Addressables.LoadAssetAsync<GameObject>(path);
+
+			var prefab = handle.WaitForCompletion();
+
+			if (prefab == null)
+			{
+				Debug.LogError($"LoadAsset<T> : {path} is null");
+				return null;
+			}
+
+			owner.OnDestroyAsObservable().Subscribe(_ => Release(handle));
+
+			return prefab;
+		}
+
+		public T LoadPrefab<T>(string path, Component owner) where T : UnityEngine.Component
+		{
+			var handle = Addressables.LoadAssetAsync<GameObject>(path);
+
+			var prefab = handle.WaitForCompletion();
+
+			if (prefab == null)
+			{
+				Debug.LogError($"LoadAsset<T> : {path} is null");
+				return null;
+			}
+
+			owner.OnDestroyAsObservable().Subscribe(_ => Release(handle));
+
+			return prefab.GetComponent<T>();
+		}
+
 		public T LoadAsset<T>(string path, Component owner) where T : UnityEngine.Object
 		{
 			var handle = Addressables.LoadAssetAsync<T>(path);
@@ -131,6 +165,40 @@ namespace AA
 			owner.OnDestroyAsObservable().Subscribe(_ => Release(handle));
 
 			return asset;
+		}
+
+		public async UniTask<GameObject> LoadPrefabAsync(string path, Component owner)
+		{
+			var handle = Addressables.LoadAssetAsync<GameObject>(path);
+
+			var prefab = await handle;
+
+			if (prefab == null)
+			{
+				Debug.LogError($"LoadAssetAsync<T> : {path} is null");
+				return null;
+			}
+
+			owner.OnDestroyAsObservable().Subscribe(_ => Release(handle));
+
+			return prefab;
+		}
+
+		public async UniTask<T> LoadPrefabAsync<T>(string path, Component owner) where T : UnityEngine.Component
+		{
+			var handle = Addressables.LoadAssetAsync<GameObject>(path);
+
+			var prefab = await handle;
+
+			if (prefab == null)
+			{
+				Debug.LogError($"LoadAssetAsync<T> : {path} is null");
+				return null;
+			}
+
+			owner.OnDestroyAsObservable().Subscribe(_ => Release(handle));
+
+			return prefab.GetComponent<T>();
 		}
 
 		public async UniTask<T> LoadAssetAsync<T>(string path, Component owner) where T : UnityEngine.Object

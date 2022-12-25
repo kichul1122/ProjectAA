@@ -22,9 +22,6 @@ namespace AA
 
             newCharacter.Construct().SetParent(transform).Teleport(setting.spawnPosition);
 
-
-
-
             Managers.Object.AddEnemy(newCharacter);
 
             //}).AddTo(this);

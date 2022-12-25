@@ -1,4 +1,3 @@
-using UniRx;
 using UnityEngine;
 
 namespace AA
@@ -9,22 +8,20 @@ namespace AA
 
         public Vector3 Position { get => _cachedTransform.position; set => _cachedTransform.position = value; }
 
-        #region Character Components
         private Transform _cachedTransform;
         public Transform CachedTransform => _cachedTransform;
+
         private Renderer _renderer;
 
         public CharacterObservable Observable = new CharacterObservable();
-        #endregion
 
-        private CompositeDisposable _disposables;
+        public ECharacter ECharacter = ECharacter.None;
 
         public Character Construct()
         {
             ObjectId = GetInstanceID();
             _cachedTransform = transform;
             _renderer = GetComponentInChildren<Renderer>();
-            _disposables = new CompositeDisposable();
 
             return this;
         }

@@ -2,7 +2,7 @@ using System.Diagnostics;
 using UnityEditor;
 using UnityEngine;
 
-public class AAMenuItem : MonoBehaviour
+public static class AAMenuItem
 {
 	[MenuItem("AA/CodeGenerate")]
 	private static void Generate()

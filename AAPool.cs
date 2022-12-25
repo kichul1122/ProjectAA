@@ -9,7 +9,7 @@ namespace AA
 
 		public AAPool(string prefabPath, Component parent)
 		{
-			_prefab = Managers.Resource.LoadAsset<T>(prefabPath, parent);
+			_prefab = Managers.Resource.LoadPrefab<T>(prefabPath, parent);
 		}
 
 		public AAPool(T prefab)

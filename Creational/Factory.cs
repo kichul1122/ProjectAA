@@ -2,13 +2,13 @@ using UnityEngine;
 
 namespace AA
 {
-	public class Factory<T> where T : Object
+	public class Factory<T> where T : Component
 	{
 		private readonly T _prefab;
 
 		public Factory(string path, Component owner)
 		{
-			_prefab = Managers.Resource.LoadAsset<T>(path, owner);
+			_prefab = Managers.Resource.LoadPrefab<T>(path, owner);
 		}
 
 		public T Create()
