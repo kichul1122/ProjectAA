@@ -10,22 +10,16 @@ namespace AA
 
         private Weapon _equppiedWeapon;
 
+        public CharacterRotator _rotator;
+
         private void Awake()
         {
+            _rotator = GetComponentInChildren<CharacterRotator>();
             _weaponPivot = GetComponentInChildren<WeaponPivot>();
 
             Observable.Interval(TimeSpan.FromSeconds(0.2d)).Subscribe(_ =>
             {
-                //Character newCharacter = pool.Rent();
-                //newCharacter.Observable.OnRemoveObservable().Subscribe(character => pool.Return(character)).AddTo(this);
-
-                //newCharacter.Construct().SetParent(transform).Teleport(setting.spawnPosition);
-
-                //Managers.Object.AddEnemy(newCharacter);
-
                 Launch();
-
-
             }).AddTo(this);
         }
 
@@ -35,8 +29,7 @@ namespace AA
 
             _equppiedWeapon = weapon;
 
-            weapon.transform.SetParent(_weaponPivot.transform, false);
-
+            weapon.SetPivot(_weaponPivot);
             weapon.Equip();
 
             return this;
@@ -56,7 +49,7 @@ namespace AA
         {
             if (!_equppiedWeapon) return;
 
-            _equppiedWeapon.Launch();
+            _equppiedWeapon.Launch(_rotator.Forward);
         }
 
     }

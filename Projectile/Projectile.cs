@@ -7,16 +7,11 @@ namespace AA
 {
 	public class Projectile : MonoBehaviour
 	{
-		private Subject<Projectile> _onRemoveSubject;
-
 		private System.Action<Projectile> _onReturn;
 
-		private Rigidbody _rigidbody;
 		public Setting _setting = new();
 
 		private Transform CachedTransform;
-
-		private Transform _projectileForwardTransform;
 
 		private float _elapsedLifeTime;
 
@@ -39,7 +34,6 @@ namespace AA
 
 			}).AddTo(this);
 
-			_rigidbody = GetComponent<Rigidbody>();
 			CachedTransform = transform;
 
 			this.UpdateAsObservable().Subscribe(_ =>
@@ -65,14 +59,9 @@ namespace AA
 			}
 		}
 
-		public Projectile Construct(System.Action<Projectile> onReturn, Setting setting = default)
+		public Projectile Construct(System.Action<Projectile> onReturn)
 		{
 			_onReturn = onReturn;
-
-			if (setting != default)
-			{
-				_setting = setting;
-			}
 
 			_elapsedLifeTime = 0f;
 
@@ -84,23 +73,23 @@ namespace AA
 			_onReturn?.Invoke(this);
 		}
 
-		public Projectile SetPosition(Vector3 position)
+		public Projectile SetSetting(Setting setting)
+		{
+			_setting = setting;
+
+			return this;
+		}
+
+		public Projectile SetStartPosition(Vector3 position)
 		{
 			CachedTransform.position = position;
 
 			return this;
 		}
 
-		public Projectile SetForward(Vector3 forward)
+		public Projectile SetStartForward(Vector3 forward)
 		{
 			CachedTransform.forward = forward;
-
-			return this;
-		}
-
-		public Projectile SetParent(Transform projectileParent)
-		{
-			CachedTransform.SetParent(projectileParent);
 
 			return this;
 		}
