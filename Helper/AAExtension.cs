@@ -2,6 +2,7 @@ using Sirenix.Serialization;
 using System;
 using System.Text;
 using UniRx;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace AA
@@ -79,6 +80,19 @@ namespace AA
 			t.position = Vector3.zero;
 			t.rotation = Quaternion.identity;
 			t.localScale = Vector3.one;
+		}
+	}
+
+	public static class MathExtension
+	{
+		public static (float3 start, float3 end, float radius) GetCapsule(this CapsuleCollider capsuleCollider)
+		{
+			var direction = new Vector3 { [capsuleCollider.direction] = 1 };
+			var offset = capsuleCollider.height / 2 - capsuleCollider.radius;
+			var start = capsuleCollider.center - direction * offset;
+			var end = capsuleCollider.center + direction * offset;
+
+			return (start, end, capsuleCollider.radius);
 		}
 	}
 }

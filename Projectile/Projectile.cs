@@ -1,3 +1,4 @@
+using Drawing;
 using System;
 using UniRx;
 using UniRx.Triggers;
@@ -29,6 +30,11 @@ namespace AA
 
 				if (!collisionCharacter) return;
 				if (collisionCharacter.ECharacter == _setting.OwnerECharacter) return;
+
+				if (collision.contactCount > 0)
+				{
+					System.Array.ForEach(collision.contacts, _ => Draw.WireSphere(_.point, 0.5f, Color.white));
+				}
 
 				OnReturn();
 

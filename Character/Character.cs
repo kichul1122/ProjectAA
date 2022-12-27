@@ -6,12 +6,10 @@ namespace AA
     {
         public int ObjectId;
 
-        public Vector3 Position { get => _cachedTransform.position; set => _cachedTransform.position = value; }
-
-        private Transform _cachedTransform;
-        public Transform CachedTransform => _cachedTransform;
-
         private Renderer _renderer;
+
+        public Transform CachedTransform;
+        public Vector3 Position { get => CachedTransform.position; set => CachedTransform.position = value; }
 
         public CharacterObservable Observable = new CharacterObservable();
 
@@ -19,13 +17,19 @@ namespace AA
 
         public CharacterRotator Rotator;
 
+        private void Awake()
+        {
+            CachedTransform = transform;
+            _renderer = GetComponentInChildren<Renderer>();
+            Rotator = GetComponentInChildren<CharacterRotator>();
+
+            this.GetOrAddComponent<CharacterGizmos>();
+
+        }
+
         public Character Construct()
         {
             ObjectId = GetInstanceID();
-            _cachedTransform = transform;
-            _renderer = GetComponentInChildren<Renderer>();
-
-            Rotator = GetComponentInChildren<CharacterRotator>();
 
             return this;
         }
@@ -52,7 +56,7 @@ namespace AA
 
         public Character SetParent(Transform parentTransform)
         {
-            _cachedTransform.SetParent(parentTransform);
+            CachedTransform.SetParent(parentTransform);
 
             return this;
         }
