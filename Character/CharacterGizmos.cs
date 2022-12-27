@@ -1,5 +1,6 @@
 using Drawing;
 using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace AA
@@ -16,6 +17,8 @@ namespace AA
 
 		private float _height;
 
+		private (float3 start, float3 end, float radius) _capsule;
+
 		private void Awake()
 		{
 			_capsuleCollider = GetComponent<CapsuleCollider>();
@@ -26,19 +29,20 @@ namespace AA
 
 			_radius = _capsuleCollider.radius;
 			_arcRadius = _radius + _arcRadiusOffset;
+
+			_capsule = _capsuleCollider.GetCapsule();
 		}
 
 		public override void DrawGizmos()
 		{
 			using (Draw.InLocalSpace(_cachedTransform))
 			{
-				var capsule = _capsuleCollider.GetCapsule();
-				Draw.WireCapsule(capsule.start, capsule.end, capsule.radius, Color.black);
+				Draw.WireCapsule(_capsule.start, _capsule.end, _capsule.radius);
 			}
 
-			Draw.WireCylinder(_cachedTransform.position, _cachedTransform.position + Vector3.up * _height, _radius, Color.black);
+			Draw.WireCylinder(_cachedTransform.position, _cachedTransform.position + Vector3.up * _height, _radius);
 
-			Draw.ArrowheadArc(_cachedTransform.position, _characterRotator.Forward, _arcRadius, Color.black);
+			Draw.ArrowheadArc(_cachedTransform.position, _characterRotator.Forward, _arcRadius);
 		}
 	}
 

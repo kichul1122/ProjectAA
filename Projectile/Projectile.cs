@@ -16,6 +16,8 @@ namespace AA
 
 		private float _elapsedLifeTime;
 
+		private Collider _collider;
+
 		private void Awake()
 		{
 			this.FixedUpdateAsObservable().Subscribe(_ =>
@@ -42,10 +44,8 @@ namespace AA
 
 			CachedTransform = transform;
 
-			this.UpdateAsObservable().Subscribe(_ =>
-			{
 
-			}).AddTo(this);
+			this.GetOrAddComponent<ColliderGizmos>();
 		}
 
 		private void Move(float fixedDeltaTime)
